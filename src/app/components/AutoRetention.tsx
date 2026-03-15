@@ -1,0 +1,16 @@
+/**4. 自动化运营：基于数据的“能量挽回”策略
+我们可以利用这些数据，在用户流失前通过代码逻辑自动“挽回”。
+
+场景：用户连续 3 天未打卡。
+
+代码逻辑：在 app/layout.tsx 中检测打卡记录。
+策略：如果流失，下一次进入时，首页粒子颜色变为“深灰色（空灵感）”，AI 生成一段特殊的“唤醒指引”。 */
+// app/components/AutoRetention.tsx
+const checkRetention = (lastCheckinDate: string) => {
+  const diff = daysBetween(new Date(), new Date(lastCheckinDate));
+  if (diff >= 3) {
+    trackEvent('user_retention_warning', { days_inactive: diff });
+    // 修改全局状态，让 AI 生成“能量流失”警告
+    setSystemMode('RETENTION_MODE');
+  }
+};
