@@ -40,7 +40,7 @@ AI Coding 提示词建议
 这个算法让你的 App 从“随机生成运势”变成了“基于严谨逻辑的计算生成”，这也是 PRD 中强调的“科技感”核心。
 */
 
-import { Lunar, ArrayUtil } from 'lunar-javascript';
+import { Lunar } from 'lunar-javascript';
 
 // 五行定义
 export type Element = 'jin' | 'mu' | 'shui' | 'huo' | 'tu';
@@ -71,25 +71,26 @@ export class BaziEngine {
   };
 
   // 2. 定义天干/地支的原始五行映射
-  private static ELEMENT_MAP: Record<string, Element> = {
+  public static ELEMENT_MAP: Record<string, Element> = {
     '甲': 'mu', '乙': 'mu', '丙': 'huo', '丁': 'huo', '戊': 'tu', '己': 'tu', '庚': 'jin', '辛': 'jin', '壬': 'shui', '癸': 'shui',
     '寅': 'mu', '卯': 'mu', '巳': 'huo', '午': 'huo', '辰': 'tu', '戌': 'tu', '丑': 'tu', '未': 'tu', '申': 'jin', '酉': 'jin', '亥': 'shui', '子': 'shui'
   };
 
   // 3. 计算得分核心方法
-  static calculateEnergy(lunar: Lunar): EnergyScore {
+  static calculateEnergy(lunar: any): EnergyScore {
     const scores: EnergyScore = { jin: 0, mu: 0, shui: 0, huo: 0, tu: 0 };
     const bazi = lunar.getBaZi(); // [年柱, 月柱, 日柱, 时柱]
+    if (!bazi || bazi.length < 4) return scores;
     const monthZhi = bazi[1].substring(1); // 月令（月支）
 
     // A. 基础天干得分 (每个天干计 100 分)
-    bazi.forEach(pillar => {
+    bazi.forEach((pillar: string) => {
       const gan = pillar.substring(0, 1);
       scores[this.ELEMENT_MAP[gan]] += 100;
     });
 
     // B. 地支藏干得分 (按比例分配 100 分)
-    bazi.forEach(pillar => {
+    bazi.forEach((pillar: string) => {
       const zhi = pillar.substring(1);
       const hidden = this.HIDDEN_GAN_WEIGHTS[zhi];
       for (const gan in hidden) {

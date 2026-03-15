@@ -28,7 +28,7 @@ export class StrengthEngine {
     '辰': 'tu', '戌': 'tu', '丑': 'tu', '未': 'tu' // 四季末：土旺
   };
 
-  static calculate(lunar: Lunar): StrengthResult {
+  static calculate(lunar: any): StrengthResult {
     const bazi = lunar.getBaZi(); // 获取八字数组：[年柱, 月柱, 日柱, 时柱]
     const riGan = bazi[2].substring(0, 1); // 日干（日主）
     const riElement = BaziEngine.ELEMENT_MAP[riGan]; // 日主的五行
@@ -51,7 +51,7 @@ export class StrengthEngine {
 
     // --- 2. 判断“得地” (占 30分) ---
     // 检查年、月、日、时 四个地支中是否有日主的根
-    bazi.forEach(pillar => {
+    bazi.forEach((pillar: string) => {
       const zhi = pillar.substring(1);
       const zhiEl = this.ZHI_ELEMENT_POWER[zhi];
       if (zhiEl === riElement) power += 7.5; // 地支有同类
@@ -60,7 +60,7 @@ export class StrengthEngine {
 
     // --- 3. 判断“得势” (占 30分) ---
     // 检查年、月、时 三个天干是否有生助
-    [bazi[0], bazi[1], bazi[3]].forEach(pillar => {
+    [bazi[0], bazi[1], bazi[3]].forEach((pillar: string) => {
       const gan = pillar.substring(0, 1);
       const ganEl = BaziEngine.ELEMENT_MAP[gan];
       if (ganEl === riElement) power += 10; // 天干比肩

@@ -4,21 +4,24 @@
  */
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 // 引入刚刚创建的安全组件
 import SecurityHandler from "@/components/SecurityHandler"; 
 import { BottomNav } from '@/components/layout/BottomNav';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// 1. 移除 Geist 字体导入逻辑（这些会导致网络下载错误）
+
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
+
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 // 这里保留 Metadata，对 SEO 非常重要
 export const metadata: Metadata = {
@@ -33,10 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      {/* <body className="antialiased bg-black min-h-screen"></body> */}
-      <body
+      {/* <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      > */}
+      <body className="antialiased bg-black min-h-screen">
         {/* 在这里插入安全组件 */}
         <SecurityHandler />
         {children}
@@ -46,4 +49,3 @@ export default function RootLayout({
     </html>
   );
 }
-

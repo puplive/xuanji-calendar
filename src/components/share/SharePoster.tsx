@@ -22,14 +22,28 @@ C. 动态配色 (PRD 7.1)
 
 逻辑：海报边框和文字颜色根据 wuxingScores 动态改变。
  */
-const posterTheme = {
-  mu: 'border-emerald-500 text-emerald-500',
-  huo: 'border-rose-500 text-rose-500',
-  // ...
-}[topElement];
+
+// 1. 定义合法的五行键名类型
+type ElementKey = 'mu' | 'huo' | 'tu' | 'jin' | 'shui';
+
+// 2. 为对象显式指定类型映射 Record<键类型, 值类型>
+const posterTheme: Record<ElementKey, string> = {
+  mu: 'border-emerald-500/30 text-emerald-500',
+  huo: 'border-rose-500/30 text-rose-500',
+  tu: 'border-amber-500/30 text-amber-500',
+  jin: 'border-zinc-300/30 text-zinc-300',
+  shui: 'border-blue-500/30 text-blue-500',
+};
 
 export const SharePoster = ({ profile, guidance, wuxing }: any) => {
   const posterRef = useRef<HTMLDivElement>(null);
+
+  // 获取得分最高的五行 key
+  const topElement = Object.entries(wuxing || {})
+    .sort((a: any, b: any) => b[1] - a[1])[0]?.[0] as ElementKey || 'mu';
+
+  // 现在访问就不会报错了，因为 TS 知道 topElement 一定是 mu/huo/tu/jin/shui 之一
+  const themeClass = posterTheme[topElement];
 
   const handleDownload = async () => {
     if (posterRef.current === null) return;
@@ -39,13 +53,15 @@ export const SharePoster = ({ profile, guidance, wuxing }: any) => {
     link.href = dataUrl;
     link.click();
   };
+  
 
   return (
     <div className="flex flex-col items-center gap-6">
       {/* 隐藏的待生成区域 */}
       <div 
         ref={posterRef}
-        className="w-[375px] bg-black p-8 relative overflow-hidden border-[1px] border-gold-900/30"
+        className={`w-[375px] bg-black p-8 relative overflow-hidden border-[1px] border-gold-900/30 ${themeClass}`}
+        // className="w-[375px] bg-black p-8 relative overflow-hidden border-[1px] border-gold-900/30"
         style={{ fontFamily: 'var(--font-geist-sans)' }}
       >
         {/* 背景装饰：淡化的八卦底纹 */}
@@ -105,6 +121,7 @@ export const SharePoster = ({ profile, guidance, wuxing }: any) => {
         <div className="flex justify-between items-center border-t border-zinc-800 pt-6">
           <div className="flex gap-3 items-center">
             <div className="w-12 h-12 bg-white p-1 rounded-lg">
+                <QRCanvas url={`https://xuanji.ai/invite/${profile?.userId}`} />
                <div className="w-full h-full bg-black flex items-center justify-center text-[6px] text-white">QR CODE</div>
             </div>
             <div>

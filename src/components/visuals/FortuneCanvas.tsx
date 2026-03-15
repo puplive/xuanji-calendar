@@ -74,7 +74,12 @@ export const FortuneCanvas = ({ config }: { config: VisualConfig }) => {
     };
 
     class Particle {
-      x: number; y: number; vx: number; vy: number;
+      // 关键修改：在变量名后加上 ! 符号
+      x!: number; 
+      y!: number; 
+      vx!: number; 
+      vy!: number;
+
       constructor() {
         this.reset();
       }

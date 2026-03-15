@@ -13,6 +13,7 @@ AI Coding 进阶建议
  */
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, Goal } from '@/lib/db';
+import { trackEvent } from '@/lib/analytics'; // 1. 关键导入
 
 export const useGoals = () => {
   const goals = useLiveQuery(() => db.goals.where('status').equals('active').toArray());
@@ -55,7 +56,8 @@ A. 目标打卡埋点 (验证 PRD 3.5)
         goalId,
         goalType: goal.type,
         currentProgress: newProgress,
-        isFirstTime: goal.checkins.length === 1
+        isFirstTime: goal.checkins.length === 1,
+        timestamp: Date.now()
     });
   };
 

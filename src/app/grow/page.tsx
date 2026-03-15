@@ -2,7 +2,9 @@
  * 2. 成长/弱点克服页面 (src/app/grow/page.tsx)
 这个页面承载了 PRD 3.6 的功能：深度的自我修正与内耗对抗。
  */
+
 "use client";
+export const runtime = 'edge'; // 强制使用边缘运行时
 
 import { motion } from 'framer-motion';
 import { ShieldAlert, Zap, Lock } from 'lucide-react';

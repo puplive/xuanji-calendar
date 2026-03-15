@@ -2,7 +2,10 @@
  * 5. 页面集成示例 (app/setup/page.tsx)
 用户录入信息并持久化的流程。
  */
+
 "use client";
+export const runtime = 'edge'; // 强制使用边缘运行时
+
 import { useState } from 'react';
 import { useFortuneData } from '@/hooks/useFortuneData';
 import { useRouter } from 'next/navigation';

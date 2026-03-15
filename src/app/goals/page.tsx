@@ -2,7 +2,9 @@
  * 1. 目标管理页面 (src/app/goals/page.tsx)
 这个页面承载了 PRD 3.5 的功能：展示所有进行中的修行目标。
  */
+
 "use client";
+export const runtime = 'edge'; // 强制使用边缘运行时
 
 import { motion } from 'framer-motion';
 import { Sparkles, Plus, Trophy } from 'lucide-react';

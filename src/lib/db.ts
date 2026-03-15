@@ -18,6 +18,14 @@ export interface UserProfile {
   wuxingScores: any;
   strengthStatus: string;
   updatedAt: number;
+  
+  // 核心修复：添加会员类型字段
+  // 'FREE' 代表免费版，'PREMIUM' 代表高级版
+  membershipType?: 'FREE' | 'PREMIUM'; 
+  
+  // 如果之前有用到勋章或积分，也可以顺便加上
+  badges?: string[];
+  points?: number;
 }
 
 /**
@@ -69,12 +77,16 @@ export class XuanjiDB extends Dexie {
   goals!: Table<Goal>;
   dailyCaches!: Table<DailyCache>;
 
+  // 2. 核心修复：在这里声明 weaknessPractices 表
+  weaknessPractices!: Table<WeaknessPractice>;
+
   constructor() {
     super('XuanjiDB');
     this.version(1).stores({
       profiles: '++id, userId, mbti',
       goals: '++id, name, type',
-      dailyCaches: 'date' // 以日期为唯一索引，方便缓存查询
+      dailyCaches: 'date', // 以日期为唯一索引，方便缓存查询
+      weaknessPractices: '++id, weaknessId, date, isCompleted' // 增加这一行
     });
   }
 }

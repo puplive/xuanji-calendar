@@ -3,6 +3,7 @@
 在 app/actions/matchReport.ts 中，我们利用上述硬数据驱动 AI 生成高感知度的文本。
  */
 "use server";
+export const runtime = 'edge'; // 强制使用边缘运行时
 
 export async function generateMatchReport(dataA: any, dataB: any, matchResult: any) {
   const prompt = `

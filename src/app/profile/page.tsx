@@ -42,8 +42,8 @@
 //   );
 // }
 
-
 "use client";
+export const runtime = 'edge'; // 强制使用边缘运行时
 
 import { useProfile } from '@/hooks/useProfile';
 import { calculateProfile } from '@/lib/profile-utils';

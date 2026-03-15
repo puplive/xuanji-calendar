@@ -14,6 +14,9 @@ B. 契约金挑战 (PRD 8.4) 实现一个“修行契约”逻辑。
 5. 订阅权益检测 Hook (hooks/useAuthStatus.ts)
 用于全站功能拦截。
  */
+
+import { useFortuneData } from '@/hooks/useFortuneData'; // 1. 确保导入路径正确
+import { TIER_CONFIG } from '@/constants/membership'; // 1. 关键导入
 export const useAuthStatus = () => {
   // 结合数据库状态和本地缓存
   const { profile } = useFortuneData();
@@ -23,8 +26,10 @@ export const useAuthStatus = () => {
   const checkAccess = (feature: keyof typeof TIER_CONFIG.FREE) => {
     if (isPremium) return true;
     // 逻辑判定：如目标数量是否超限
-    return false; 
+    // 如果是免费用户，返回配置中定义的限制值（或布尔值）
+    return TIER_CONFIG.FREE[feature]; 
+    // 如果是 feature 限制类逻辑，可以在此扩展
   };
 
-  return { isPremium, checkAccess };
+  return { isPremium, checkAccess, profile };
 };

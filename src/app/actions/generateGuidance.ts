@@ -1,4 +1,5 @@
 "use server";
+export const runtime = 'edge'; // 强制使用边缘运行时
 /**第四步：AI 接口设计 (Server Action) */
 export async function generateDailyGuidance(userData: any, fortuneData: any) {
   const prompt = `

@@ -1,5 +1,5 @@
-export const runtime = 'edge'; // 强制使用边缘运行时
 "use client"; // 关键：首页现在需要监听本地存储状态
+export const runtime = 'edge'; // 强制使用边缘运行时
 
 import { useProfile } from '@/hooks/useProfile';
 import { calculateProfile } from '@/lib/profile-utils';

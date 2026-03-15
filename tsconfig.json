@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "src/types/lunar.d.ts" // 确保这一行被包含，或者 "**/*.ts" 已经覆盖了它
   ],
   "exclude": ["node_modules"]
 }
