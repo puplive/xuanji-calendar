@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     }
 
     // 验证令牌
-    const userPayload = authService.verifyToken(token);
+    const userPayload = await authService.verifyToken(token);
     if (!userPayload) {
       return setCorsHeaders(new Response(
         JSON.stringify({

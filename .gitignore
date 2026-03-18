@@ -38,7 +38,10 @@ yarn-error.log*
 
 # wrangler build artifacts
 .wrangler
+.dev.vars
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.claude

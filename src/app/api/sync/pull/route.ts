@@ -24,11 +24,11 @@ export async function POST(request: NextRequest) {
 
     // 获取云端目标
     const goalsResult = await d1Client.getGoalsByUserId(userId);
-    const goals = goalsResult.results || [];
+    const goals = (goalsResult.results || []) as any[];
 
     // 获取云端弱点实践
     const practicesResult = await d1Client.getPracticesByUserId(userId);
-    const practices = practicesResult.results || [];
+    const practices = (practicesResult.results || []) as any[];
 
     return NextResponse.json({
       success: true,

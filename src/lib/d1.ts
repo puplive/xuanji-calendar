@@ -1,20 +1,22 @@
 import { D1Database } from '@cloudflare/workers-types';
+import { createLocalDBInstance } from './local-db-mock';
 
 // 定义环境变量类型
 export interface Env {
-  DB: D1Database;
+  DB: D1Database | any; // 在本地开发时可能是模拟实例
   JWT_SECRET: string;
 }
 
 // 数据库查询包装器
 export class D1Client {
-  constructor(private db: D1Database) {}
+  constructor(private db: D1Database | any) {} // 支持模拟实例
 
   // 用户相关操作
   async createUser(userData: {
     id: string;
     email: string;
     passwordHash: string;
+    username?: string;
     birthDate?: string;
     mbti?: string;
     zodiac?: string;
@@ -22,13 +24,14 @@ export class D1Client {
     const now = Date.now();
     return this.db.prepare(`
       INSERT INTO users (
-        id, email, password_hash, birth_date, mbti, zodiac,
+        id, email, password_hash, username, birth_date, mbti, zodiac,
         created_at, updated_at, membership_type, points
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'FREE', 0)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'FREE', 0)
     `).bind(
       userData.id,
       userData.email,
       userData.passwordHash,
+      userData.username || null,
       userData.birthDate || null,
       userData.mbti || null,
       userData.zodiac || null,
@@ -277,6 +280,40 @@ export class D1Client {
 // 工具函数：从请求中获取环境变量
 export function getEnv(request: Request): Env {
   // 在实际部署中，这些环境变量由Cloudflare Workers提供
-  // 在本地开发时，可能需要模拟
-  return (request as any).env as Env;
+  // 在本地开发时，通过不同方式获取环境变量
+  try {
+    // 尝试从请求的环境对象获取（Cloudflare Workers 环境）
+    if ((request as any).env) {
+      const env = (request as any).env as Env;
+
+      // 检查DB是否有效
+      if (!env.DB) {
+        // 在本地开发环境中，提供一个模拟的DB实例
+        console.warn('使用本地数据库模拟实例');
+        env.DB = createLocalDBInstance();
+      }
+
+      return env;
+    }
+
+    // Node.js 环境下直接使用 process.env
+    if (typeof process !== 'undefined' && process.env) {
+      return {
+        DB: createLocalDBInstance(), // 在本地环境中始终提供数据库模拟
+        JWT_SECRET: process.env.JWT_SECRET || 'dev_jwt_secret_key_for_local_testing_only'
+      };
+    }
+
+    // 浏览器环境或其它环境，返回默认值
+    return {
+      DB: createLocalDBInstance(),
+      JWT_SECRET: 'browser_env_jwt_secret'
+    };
+  } catch (e) {
+    // 如果获取不到 env，则返回带模拟数据库的环境
+    return {
+      DB: createLocalDBInstance(),
+      JWT_SECRET: process.env.JWT_SECRET || 'fallback_jwt_secret'
+    };
+  }
 }

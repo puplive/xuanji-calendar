@@ -24,6 +24,17 @@ export const GoalChart = ({ goals, timeRange = 'week' }: GoalChartProps) => {
       </div>
     );
   }
+  // 获取类型标签
+  const getTypeLabel = (type: string) => {
+    const labels: Record<string, string> = {
+      'study': '学习',
+      'health': '健康',
+      'work': '工作',
+      'emotion': '情绪',
+      'other': '其他'
+    };
+    return labels[type] || type;
+  };
 
   // 处理数据：计算每日打卡总数
   const processDailyCheckins = () => {
@@ -78,17 +89,7 @@ export const GoalChart = ({ goals, timeRange = 'week' }: GoalChartProps) => {
   const typeData = processGoalTypeData();
   const wuxingData = processWuxingData();
 
-  // 获取类型标签
-  const getTypeLabel = (type: string) => {
-    const labels: Record<string, string> = {
-      'study': '学习',
-      'health': '健康',
-      'work': '工作',
-      'emotion': '情绪',
-      'other': '其他'
-    };
-    return labels[type] || type;
-  };
+  
 
   return (
     <div className="space-y-6">

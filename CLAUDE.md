@@ -18,6 +18,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - lunar-javascript (农历/八字计算)
 - Dexie (IndexedDB) + crypto-js (本地加密)
 - 边缘运行时 (Edge Runtime)
+- 上传github 自动在 cloudflare pages 部署
+- 数据库线上使用cloudflare D1
 
 ## 开发命令
 
