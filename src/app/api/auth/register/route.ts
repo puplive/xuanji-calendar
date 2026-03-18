@@ -10,7 +10,7 @@ interface RegisterRequestBody {
   zodiac?: string;
 }
 
-export const runtime = 'edge';
+export const runtime = 'edge'; // Cloudflare Pages 必需
 
 export async function POST(request: Request) {
   // 处理预检请求

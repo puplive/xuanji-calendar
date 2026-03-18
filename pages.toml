@@ -1,0 +1,18 @@
+[build]
+command = "pnpm build:cf"
+
+[[build.environment]]
+name = "NODE_VERSION"
+value = "20"
+
+[[build.environment]]
+name = "PNPM_VERSION"
+value = "9"
+
+# 排除大型文件
+[site]
+exclude = [
+  "**/nop-build-log.json",
+  "**/*.map",
+  "**/.next/cache/**",
+]

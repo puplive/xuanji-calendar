@@ -134,15 +134,11 @@ src/
 
 ### API 路由
 
-- `src/app/api/oracle/route.ts` - **AI 神谕接口**
-  - 接收匿名化命理数据，生成个性化解读
+- `src/app/api/oracle/route.ts` - **AI 神谕接口**（支持三种类型）
+  - `type: 'daily'` - 接收匿名化命理数据，生成每日个性化解读
+  - `type: 'goal'` - 为目标管理提供 AI 建议
+  - `type: 'practice'` - 为弱点克服练习提供指导
   - 严格遵守隐私脱敏（不传输原始出生日期）
-
-- `src/app/api/goal-oracle/route.ts` - **目标指引接口**
-  - 为目标管理提供 AI 建议
-
-- `src/app/api/metaphysics/calculate/route.ts` - **玄学计算接口**
-  - 提供八字合婚等计算功能
 
 ## 样式与设计规范
 

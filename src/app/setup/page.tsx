@@ -4,7 +4,7 @@
  */
 
 "use client";
-export const runtime = 'edge'; // 强制使用边缘运行时
+// 移除 edge runtime - 页面在客户端渲染
 
 import { useState } from 'react';
 import { useFortuneData } from '@/hooks/useFortuneData';

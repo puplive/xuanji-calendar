@@ -1,50 +1,113 @@
 "use client"; // 关键：首页现在需要监听本地存储状态
-export const runtime = 'edge'; // 强制使用边缘运行时
+// 移除 edge runtime - 页面在客户端渲染
 
 import { useProfile } from '@/hooks/useProfile';
-import { calculateProfile } from '@/lib/profile-utils';
-import { BaziEngine, Element } from '@/lib/bazi-engine';
-import { StrengthEngine } from '@/lib/strength-engine';
-import { mapFortuneToVisuals } from '@/lib/visual-mapper';
-import { getUserMetaphysics } from '@/lib/fortune';
 import { FortuneCanvas } from '@/components/visuals/FortuneCanvas';
 import { GoalCard } from '@/components/goals/GoalCard';
-import { Lunar } from 'lunar-javascript';
 import { ShieldAlert, Sparkles, Compass, Loader2, Calendar } from 'lucide-react';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+
+// 定义计算模块的类型
+type CalculationModules = {
+  calculateProfile: any;
+  BaziEngine: any;
+  StrengthEngine: any;
+  mapFortuneToVisuals: any;
+  getUserMetaphysics: any;
+  Lunar: any;
+};
+
+// 定义五行类型
+type Element = 'jin' | 'mu' | 'shui' | 'huo' | 'tu';
+
+// 延迟加载计算逻辑以优化初始包大小
+const loadCalculationModules = async () => {
+  const { calculateProfile } = await import('@/lib/profile-utils');
+  const { BaziEngine } = await import('@/lib/bazi-engine');
+  const { StrengthEngine } = await import('@/lib/strength-engine');
+  const { mapFortuneToVisuals } = await import('@/lib/visual-mapper');
+  const { getUserMetaphysics } = await import('@/lib/fortune');
+  const { Lunar } = await import('lunar-javascript');
+
+  return {
+    calculateProfile,
+    BaziEngine,
+    StrengthEngine,
+    mapFortuneToVisuals,
+    getUserMetaphysics,
+    Lunar
+  };
+};
 
 export default function HomePage() {
-  // 1. 获取持久化的用户档案
   const { profile } = useProfile();
-  
-  // 2. 核心计算逻辑：使用 useMemo 优化性能，只有 profile 改变时才重新计算
+  const [modulesLoaded, setModulesLoaded] = useState(false);
+  const [calculationModules, setCalculationModules] = useState<CalculationModules | null>(null);
+
+  // 异步加载计算模块
+  useEffect(() => {
+    let isCancelled = false;
+
+    const loadModules = async () => {
+      try {
+        const modules = await loadCalculationModules();
+        if (!isCancelled) {
+          setCalculationModules(modules);
+          setModulesLoaded(true);
+        }
+      } catch (error) {
+        console.error('Failed to load calculation modules:', error);
+      }
+    };
+
+    loadModules();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  // 核心计算逻辑：使用 useMemo 优化性能
   const fortuneData = useMemo(() => {
+    if (!modulesLoaded || !calculationModules || !profile.birthDate) return null;
+
+    const { Lunar, BaziEngine, StrengthEngine, calculateProfile, mapFortuneToVisuals } = calculationModules;
+
     const date = new Date(profile.birthDate);
     if (isNaN(date.getTime())) return null;
 
-    const lunar = Lunar.fromYmdHms(
-      date.getFullYear(), 
-      date.getMonth() + 1, 
-      date.getDate(), 
-      date.getHours(), 
-      date.getMinutes(), 0
-    );
+    try {
+      const lunar = Lunar.fromYmdHms(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(), 0
+      );
 
-    const wuxingScores = BaziEngine.calculateEnergy(lunar);
-    const strength = StrengthEngine.calculate(lunar);
-    const meta = calculateProfile(profile.birthDate);
+      const wuxingScores = BaziEngine.calculateEnergy(lunar);
+      const strength = StrengthEngine.calculate(lunar);
+      const meta = calculateProfile(profile.birthDate);
 
-    // 映射视觉参数
-    const visualConfig = mapFortuneToVisuals({
-      wuxing: wuxingScores,
-      strength: strength
-    });
+      // 映射视觉参数
+      const visualConfig = mapFortuneToVisuals({
+        wuxing: wuxingScores,
+        strength: strength
+      });
 
-    return { lunar, wuxingScores, strength, meta, visualConfig };
-  }, [profile.birthDate]);
+      return { lunar, wuxingScores, strength, meta, visualConfig };
+    } catch (error) {
+      console.error('计算命理数据出错:', error);
+      return null;
+    }
+  }, [profile.birthDate, modulesLoaded, calculationModules]);
 
-  // 3. 获取今日黄历信息
+  // 获取今日黄历信息
   const todayAlmanac = useMemo(() => {
+    if (!modulesLoaded || !calculationModules) return null;
+
+    const { getUserMetaphysics } = calculationModules;
+
     try {
       const today = new Date();
       return getUserMetaphysics(today);
@@ -52,10 +115,10 @@ export default function HomePage() {
       console.error('获取今日黄历失败:', error);
       return null;
     }
-  }, []);
+  }, [modulesLoaded, calculationModules]);
 
-  // 4. 加载中状态处理（防止 Hydration 错误）
-  if (!fortuneData) {
+  // 加载中状态处理（防止 Hydration 错误）
+  if (!modulesLoaded || !fortuneData) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <Loader2 className="animate-spin text-gold-500" />
@@ -65,7 +128,7 @@ export default function HomePage() {
 
   const { wuxingScores, strength, meta, visualConfig } = fortuneData;
 
-  // 5. 生成动态能量状态描述
+  // 生成动态能量状态描述
   const generateEnergyDescription = () => {
     if (!todayAlmanac || !meta) return '';
 
@@ -73,7 +136,13 @@ export default function HomePage() {
     const baziParts = meta.bazi.split(' ');
     if (baziParts.length < 3) return '命理数据解析异常。';
     const riGanElement = baziParts[2].substring(0, 1);
-    const riElement = BaziEngine.ELEMENT_MAP[riGanElement];
+
+    // 需要从 BaziEngine 获取 ELEMENT_MAP
+    let riElement: Element = 'mu';
+    if (modulesLoaded && calculationModules) {
+      const { BaziEngine } = calculationModules;
+      riElement = BaziEngine.ELEMENT_MAP[riGanElement];
+    }
     if (!riElement) return '五行映射数据异常。';
 
     // 五行名称映射
@@ -139,7 +208,7 @@ export default function HomePage() {
 
     // 3. 五行分析
     if (strongestScore > 40) {
-      parts.push(`${elementNames[strongestElement]}元素极旺，${strength.yongShen.includes(strongestElement) ? '此乃喜用神' : '需注意平衡'}。`);
+      parts.push(`${elementNames[strongestElement]}元素极旺，${(strength as any).yongShen.includes(strongestElement) ? '此乃喜用神' : '需注意平衡'}。`);
     }
 
     if (weakestScore < 15) {
@@ -261,7 +330,7 @@ export default function HomePage() {
          <div className="mb-6 flex items-center gap-4 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
            <ShieldAlert className="text-red-500 w-5 h-5 flex-shrink-0" />
            <p className="text-xs text-red-200/80 leading-snug">
-             检测到潜在风险：今日“枭神”活跃，INTJ 易陷入过度内耗。建议开启“书写不安清单”修行。
+             检测到潜在风险：今日"枭神"活跃，INTJ 易陷入过度内耗。建议开启"书写不安清单"修行。
            </p>
          </div>
 
@@ -269,10 +338,10 @@ export default function HomePage() {
         <div className="space-y-4">
           <h3 className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase px-2 mb-2">修行进度</h3>
           {mockGoals.map(goal => (
-            <GoalCard 
-              key={goal.id} 
-              goal={goal} 
-              advice="结合今日天干之利，此项修行事半功倍。" 
+            <GoalCard
+              key={goal.id}
+              goal={goal}
+              advice="结合今日天干之利，此项修行事半功倍。"
             />
           ))}
         </div>

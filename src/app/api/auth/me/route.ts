@@ -1,7 +1,7 @@
 import { D1Client, getEnv } from '@/lib/d1';
 import { AuthService, setCorsHeaders, handleOptionsRequest, requireAuth } from '@/lib/auth';
 
-export const runtime = 'edge';
+export const runtime = 'edge'; // Cloudflare Pages 必需
 
 export async function GET(request: Request) {
   // 处理预检请求

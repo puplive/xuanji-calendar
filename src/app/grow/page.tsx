@@ -4,7 +4,7 @@
  */
 
 "use client";
-export const runtime = 'edge'; // 强制使用边缘运行时
+// 移除 edge runtime - 页面在客户端渲染
 
 import { motion } from 'framer-motion';
 import { ShieldAlert, Zap, Lock, TrendingUp, Target, Plus } from 'lucide-react';
