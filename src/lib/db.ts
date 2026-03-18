@@ -48,6 +48,11 @@ export interface Goal {
   status: 'active' | 'completed' | 'failed';
   checkins: { date: string; value: number }[]; // 打卡记录
   createdAt: number;
+  // 同步元数据
+  localId?: string;     // 本地唯一ID，用于同步（UUID）
+  syncStatus?: 'pending' | 'synced' | 'conflict';
+  syncVersion?: number; // 同步版本号，每次更新递增
+  lastSyncedAt?: number; // 最后同步时间戳
 }
 // 确保 XuanjiDB 构造函数包含：
 // this.version(2).stores({ goals: '++id, userId, type, status' });
@@ -56,6 +61,12 @@ export interface DailyCache {
   date: string; // 主键: YYYY-MM-DD
   content: string;
   huangli: any;
+  // 同步元数据
+  userId?: string;
+  localId?: string;
+  syncStatus?: 'pending' | 'synced' | 'conflict';
+  syncVersion?: number;
+  lastSyncedAt?: number;
 }
 
 /**在 IndexedDB 中增加 weaknessPractices 表，记录每日修行的完成情况。 */
@@ -66,6 +77,12 @@ export interface WeaknessPractice {
   content: string;    // AI生成的每日具体练习
   isCompleted: boolean;
   streak: number;     // 连续天数
+  // 同步元数据
+  localId?: string;     // 本地唯一ID，用于同步（UUID）
+  syncStatus?: 'pending' | 'synced' | 'conflict';
+  syncVersion?: number; // 同步版本号，每次更新递增
+  lastSyncedAt?: number; // 最后同步时间戳
+  userId?: string;     // 关联用户ID
 }
 
 // db.version(3).stores({ weaknessPractices: '++id, weaknessId, date, isCompleted' });
@@ -82,11 +99,11 @@ export class XuanjiDB extends Dexie {
 
   constructor() {
     super('XuanjiDB');
-    this.version(1).stores({
+    this.version(2).stores({
       profiles: '++id, userId, mbti',
-      goals: '++id, name, type',
+      goals: '++id, userId, name, type, syncStatus, localId',
       dailyCaches: 'date', // 以日期为唯一索引，方便缓存查询
-      weaknessPractices: '++id, weaknessId, date, isCompleted' // 增加这一行
+      weaknessPractices: '++id, userId, weaknessId, date, isCompleted, syncStatus, localId'
     });
   }
 }

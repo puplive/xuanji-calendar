@@ -42,9 +42,18 @@ import { Lunar, Solar } from 'lunar-javascript';
 import { BaziEngine } from '@/lib/bazi-engine'; // 确保之前定义的类在此路径
 import { StrengthEngine } from '@/lib/strength-engine';
 
+interface MetaphysicsCalculateRequestBody {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute?: number;
+  userId?: string;
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const body = await req.json() as MetaphysicsCalculateRequestBody;
     const { year, month, day, hour, minute = 0 } = body;
 
     // 1. 参数校验

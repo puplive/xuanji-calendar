@@ -49,10 +49,22 @@ import { useProfile } from '@/hooks/useProfile';
 import { calculateProfile } from '@/lib/profile-utils';
 import { Calendar, Brain, Cpu, Hash, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
+  const router = useRouter();
   const { profile, updateProfile } = useProfile();
-  console.log(profile.birthDate)
+  console.log(profile)
+  const { logout } = useAuth();
+  const setLogin = ()=>{
+    if(profile.isGuest){
+      logout()
+    }else{
+      router.push('/login'); // 登录成功后跳转到首页
+    }
+  }
+  
   // 1. 尝试计算
   const meta = calculateProfile(new Date(profile.birthDate));
 
@@ -70,7 +82,7 @@ export default function ProfilePage() {
       <header className="mb-10 pt-8 flex justify-between items-center">
         <h1 className="text-3xl font-black italic tracking-tighter">ARCHIVE</h1>
         <div className="px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-[10px] text-gold-500 font-mono">
-          V1.0.26
+          V0.2.0
         </div>
       </header>
 
@@ -165,6 +177,19 @@ export default function ProfilePage() {
           </div>
         </div>
       </section>
+
+      {/* 登录 退出 */}
+      <button
+          onClick={() => setLogin()}
+          className={`
+          ${!profile.isGuest 
+              ? 'w-full bg-gradient-to-r from-[#D4AF37] to-amber-500 hover:from-amber-500 hover:to-[#D4AF37] text-black font-bold py-4 rounded-2xl transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed' 
+              : 'w-full bg-zinc-900/50 border border-white/10 hover:border-[#D4AF37]/30 text-white font-medium py-4 rounded-2xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-3'
+          }
+          `}
+      >
+          {profile.isGuest? '退出': '登录'}
+      </button>
 
       {/* 3. 数据重置 (隐私保护) */}
       <button 

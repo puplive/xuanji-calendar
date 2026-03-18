@@ -4,8 +4,14 @@ export const runtime = 'edge'; // 强制使用边缘运行时
  * 假设我们使用 微信支付 / 支付宝 (或 Stripe)。在 Next.js Route Handler 中处理订单创建。 */
 import { NextRequest, NextResponse } from 'next/server';
 
+interface CheckoutRequestBody {
+  userId: string;
+  productId: string;
+  type: string;
+}
+
 export async function POST(req: NextRequest) {
-  const { userId, productId, type } = await req.json();
+  const { userId, productId, type } = await req.json() as CheckoutRequestBody;
 
   // 1. 验证用户身份与产品有效性
   // 2. 创建本地待支付订单 (MySQL/PostgreSQL)

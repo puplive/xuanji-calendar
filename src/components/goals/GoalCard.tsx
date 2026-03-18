@@ -106,7 +106,7 @@ import { CheckCircle2, Trophy, Target } from 'lucide-react';
 // 1. 完善接口定义，增加 advice 属性
 interface GoalCardProps {
   goal: {
-    id: number;
+    id?: number;
     name: string;
     progress: number;
     type: string;
@@ -136,7 +136,7 @@ export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
 
         <motion.button 
           whileTap={{ scale: 0.9 }}
-          onClick={() => onComplete?.(goal.id)}
+          onClick={() => goal.id && onComplete?.(goal.id)}
           className={`h-10 w-10 rounded-full flex items-center justify-center transition-all ${
             goal.progress >= 100 
             ? 'bg-green-500/20 text-green-500' 

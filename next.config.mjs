@@ -42,10 +42,6 @@ const checkPerformance = () => {
  */
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Cloudflare Pages 建议开启
-  experimental: {
-    runtime: 'edge',
-  },
   // 开启生产环境压缩
   compress: true,
   // 确保 React 严格模式开启，帮助发现粒子系统中的内存泄漏

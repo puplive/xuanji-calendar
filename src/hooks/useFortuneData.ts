@@ -20,7 +20,7 @@ export const useFortuneData = () => {
       method: 'POST',
       body: JSON.stringify(rawData)
     });
-    const result = await res.json();
+    const result = await res.json() as any;
 
     if (result.success) {
       const newProfile: UserProfile = {

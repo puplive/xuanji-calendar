@@ -1,10 +1,18 @@
 export const runtime = 'edge'; // 强制使用边缘运行时
 /**
  * 3. AI 驱动的目标指引 (app/api/goal-oracle/route.ts)
-根据 PRD 3.5，每个目标每日会生成一条融合了黄历的个性化建议。
+ * 根据 PRD 3.5，每个目标每日会生成一条融合了黄历的个性化建议。
  */
+
+interface GoalOracleRequestBody {
+  goalName: string;
+  wuxing: Record<string, number>;
+  huangli: { yi: string[] };
+  mbti: string;
+}
+
 export async function POST(req: Request) {
-  const { goalName, wuxing, huangli, mbti } = await req.json();
+  const { goalName, wuxing, huangli, mbti } = await req.json() as GoalOracleRequestBody;
 
   // 提示词工程：融合目标与玄学数据
   const prompt = `

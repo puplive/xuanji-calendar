@@ -6,10 +6,9 @@ export const runtime = 'edge'; // 强制使用边缘运行时
 
  */
 export async function POST(req: Request) {
-  const { compositeData } = await req.json();
+  const { compositeData, rawProfile } = await req.json() as any;
   /**2. 传输层：AI 请求匿名化 (app/api/oracle/route.ts)
 根据 PRD 4.2 节，发送给大模型（DeepSeek/OpenAI）的数据严禁包含真实姓名、精确经纬度等。 */
-  const { rawProfile } = await req.json();
 
   // --- 隐私脱敏处理 ---
   const anonymousData = {

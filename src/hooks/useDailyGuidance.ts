@@ -22,7 +22,7 @@ export const useDailyGuidance = (profile: any) => {
       method: 'POST',
       body: JSON.stringify({ compositeData: profile })
     });
-    const aiResult = await res.json();
+    const aiResult = await res.json() as any;
 
     // 写入缓存
     await db.dailyCaches.put({

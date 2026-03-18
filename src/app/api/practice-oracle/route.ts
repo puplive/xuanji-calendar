@@ -2,8 +2,24 @@ export const runtime = 'edge'; // 强制使用边缘运行时
 /**
  * 3. AI 练习生成引擎 (app/api/practice-oracle/route.ts)
  * 这是本模块的灵魂：根据用户今日的黄历宜忌和身旺身弱状态，动态调整练习难度。 */
+
+interface PracticeOracleRequestBody {
+  weakness: {
+    name: string;
+    baziCause: string;
+  };
+  profile: {
+    strengthStatus: string;
+    mbti: string;
+  };
+  huangli: {
+    yi: string[];
+    ji: string[];
+  };
+}
+
 export async function POST(req: Request) {
-  const { weakness, profile, huangli } = await req.json();
+  const { weakness, profile, huangli } = await req.json() as PracticeOracleRequestBody;
 
   const prompt = `
     你是一位心理咨询师兼玄学导师。

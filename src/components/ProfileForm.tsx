@@ -23,7 +23,7 @@ const handleCalculate = async (formData: any) => {
     })
   });
 
-  const result = await response.json();
+  const result = await response.json() as any;
   
   if (result.success) {
     // 1. 将数据存入本地状态或 Zustand/Pinia
