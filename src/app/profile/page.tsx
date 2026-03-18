@@ -54,14 +54,13 @@ import { useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { profile, updateProfile } = useProfile();
-  console.log(profile)
+  const { profile, isGuest, updateProfile } = useProfile();
   const { logout } = useAuth();
   const setLogin = ()=>{
-    if(profile.isGuest){
-      logout()
-    }else{
+    if(isGuest){
       router.push('/login'); // 登录成功后跳转到首页
+    }else{
+      logout()
     }
   }
   
@@ -182,13 +181,13 @@ export default function ProfilePage() {
       <button
           onClick={() => setLogin()}
           className={`
-          ${!profile.isGuest 
+          ${isGuest 
               ? 'w-full bg-gradient-to-r from-[#D4AF37] to-amber-500 hover:from-amber-500 hover:to-[#D4AF37] text-black font-bold py-4 rounded-2xl transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed' 
               : 'w-full bg-zinc-900/50 border border-white/10 hover:border-[#D4AF37]/30 text-white font-medium py-4 rounded-2xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-3'
           }
           `}
       >
-          {profile.isGuest? '退出': '登录'}
+          {isGuest? '登录': '退出'}
       </button>
 
       {/* 3. 数据重置 (隐私保护) */}
