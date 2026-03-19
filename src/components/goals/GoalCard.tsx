@@ -139,8 +139,10 @@ export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
           onClick={() => goal.id && onComplete?.(goal.id)}
           className={`h-10 w-10 rounded-full flex items-center justify-center transition-all ${
             goal.progress >= 100 
-            ? 'bg-green-500/20 text-green-500' 
-            : 'bg-gold-600 text-black'
+            ? 'bg-green-500/20 text-green-400'
+            : goal.progress > 0
+            ? 'bg-gold-500 text-amber-500'
+            : 'bg-white/10 text-gray-300'
           }`}
         >
           {goal.progress >= 100 ? <Trophy size={18} /> : <CheckCircle2 size={20} />}
@@ -161,7 +163,7 @@ export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
         <motion.div 
           initial={{ width: 0 }}
           animate={{ width: `${goal.progress}%` }}
-          className="h-full bg-gold-500"
+          className="h-full bg-green-500"
         />
       </div>
     </motion.div>

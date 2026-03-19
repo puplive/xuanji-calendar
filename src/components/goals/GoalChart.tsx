@@ -177,7 +177,7 @@ export const GoalChart = ({ goals, timeRange = 'week' }: GoalChartProps) => {
       </div>
 
       {/* 五行成长雷达图 */}
-      <div className="bg-zinc-900/50 border border-white/5 rounded-3xl p-5">
+      {/* <div className="bg-zinc-900/50 border border-white/5 rounded-3xl p-5">
         <div className="flex items-center gap-2 mb-4">
           <Calendar size={16} className="text-gold-500" />
           <h3 className="text-[10px] font-bold tracking-widest text-zinc-400 uppercase">五行成长维度</h3>
@@ -213,7 +213,7 @@ export const GoalChart = ({ goals, timeRange = 'week' }: GoalChartProps) => {
             </RadarChart>
           </ResponsiveContainer>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

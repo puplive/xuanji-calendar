@@ -4,7 +4,7 @@
 import { useProfile } from '@/hooks/useProfile';
 import { FortuneCanvas } from '@/components/visuals/FortuneCanvas';
 import { GoalCard } from '@/components/goals/GoalCard';
-import { ShieldAlert, Sparkles, Compass, Loader2, Calendar } from 'lucide-react';
+import { ShieldAlert, Sparkles, Compass, Loader2, Calendar, Lightbulb } from 'lucide-react';
 import { useMemo, useState, useEffect } from 'react';
 
 // 定义计算模块的类型
@@ -233,11 +233,21 @@ export default function HomePage() {
     return parts.join(' ');
   };
 
+  // 生成潜在风险
+  const generate = () => {
+    // console.log(todayAlmanac)
+    if (!todayAlmanac) return '';
+    return todayAlmanac.pengZuGan.suggestion+todayAlmanac.pengZuZhi.suggestion
+    // const shensha = ''
+    // const activity = ''
+    // return `检测到潜在风险：今日"${shensha}"活跃，${strength.status}易陷入过度内耗。建议开启"${activity}"修行。`;
+  }
+
   // 模拟待办目标
-  const mockGoals = [
-    { id: 1, name: "深度阅读 30min", progress: 45, type: 'study' },
-    { id: 2, name: "冥想正念", progress: 10, type: 'health' }
-  ];
+  // const mockGoals = [
+  //   { id: 1, name: "深度阅读 30min", progress: 45, type: 'study' },
+  //   { id: 2, name: "冥想正念", progress: 10, type: 'health' }
+  // ];
 
   return (
     <main className="min-h-screen bg-[#050505] text-white relative overflow-hidden font-sans">
@@ -326,16 +336,20 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 弱点克制提醒 (PRD 3.6) */}
+        {/* 彭祖百忌 */}
          <div className="mb-6 flex items-center gap-4 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
            <ShieldAlert className="text-red-500 w-5 h-5 flex-shrink-0" />
            <p className="text-xs text-red-200/80 leading-snug">
-             检测到潜在风险：今日"枭神"活跃，INTJ 易陷入过度内耗。建议开启"书写不安清单"修行。
+              <p className='text-[14px]'>{todayAlmanac.pengZuGan.taboo}</p>
+              <p className='text-[14px]'>{todayAlmanac.pengZuZhi.taboo}</p>
+              {/* <Lightbulb className="text-blue-500 w-3 h-3"/> */}
+             {todayAlmanac.pengZuGan.suggestion+todayAlmanac.pengZuZhi.suggestion}
            </p>
          </div>
+        {/* 弱点克制提醒 (PRD 3.6) */}
 
         {/* 目标卡片 */}
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <h3 className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase px-2 mb-2">修行进度</h3>
           {mockGoals.map(goal => (
             <GoalCard
@@ -344,7 +358,7 @@ export default function HomePage() {
               advice="结合今日天干之利，此项修行事半功倍。"
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </main>
   );
