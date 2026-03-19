@@ -5,14 +5,8 @@ import { Solar, Lunar } from 'lunar-javascript';
  * 将公历日期转换为八字、黄历等玄学数据
  * @param birthDate 标准 Date 对象
  */
-export const getUserMetaphysics = (birthDate: Date) => {
-  // 1. 将 JS Date 转换为库所需的 Solar 对象
-  const solar = Solar.fromDate(birthDate);
-  
-  // 2. 转为农历/八字对象
-  const lunar = solar.getLunar();
 
-  const pengZuHundredTaboos = {
+const pengZuHundredTaboos: Record<string, PengZuItem> = {
     "甲不开仓财物耗散": {
       "taboo": "甲不开仓财物耗散",
       "ancient": "甲属阳木，象征生长、开启。开仓放粮或取用财物，好比春天刚发芽就消耗储存，会导致后续匮乏。",
@@ -145,7 +139,22 @@ export const getUserMetaphysics = (birthDate: Date) => {
       "modern": "不要在关系不清、双方了解不足时匆忙结婚。亥日如同深夜的迷雾，此时进入婚姻容易隐藏矛盾，日后爆发。",
       "suggestion": "结婚前确保彼此足够坦诚，别让“将就”成为日后的隐患。"
     }
-  };
+  } as const;  // 关键
+  // 提取键和值的类型
+  type PengZuKey = keyof typeof pengZuHundredTaboos;
+  type PengZuValue = typeof pengZuHundredTaboos[PengZuKey];
+
+export const getUserMetaphysics = (birthDate: Date) => {
+  // 1. 将 JS Date 转换为库所需的 Solar 对象
+  const solar = Solar.fromDate(birthDate);
+  
+  // 2. 转为农历/八字对象
+  const lunar = solar.getLunar();
+
+  // 使用类型断言（前提是 lunar.getPengZuGan() 返回的值一定是这些键之一）
+  const ganKey = lunar.getPengZuGan() as PengZuKey;
+  const zhiKey = lunar.getPengZuZhi() as PengZuKey;
+  
   return {
     // 农历日期：如 二月初二
     lunarDate: `${lunar.getMonthInChinese()}月${lunar.getDayInChinese()}`,
@@ -162,8 +171,8 @@ export const getUserMetaphysics = (birthDate: Date) => {
     
     // 星座
     zodiac: solar.getXingZuo(),
-    pengZuGan: pengZuHundredTaboos[lunar.getPengZuGan()]||{},
-    pengZuZhi: pengZuHundredTaboos[lunar.getPengZuZhi()]||{}
+    pengZuGan: pengZuHundredTaboos[ganKey] || ({} as PengZuValue), // 如果可能 undefined，这里使用空对象断言
+    pengZuZhi: pengZuHundredTaboos[zhiKey] || ({} as PengZuValue),
     // shensha: lunar.getDayShensha(), // 获取当日神煞列表
   };
 };
