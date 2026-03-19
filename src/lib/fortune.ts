@@ -6,7 +6,7 @@ import { Solar, Lunar } from 'lunar-javascript';
  * @param birthDate 标准 Date 对象
  */
 
-const pengZuHundredTaboos: Record<string, PengZuItem> = {
+const pengZuHundredTaboos = {
     "甲不开仓财物耗散": {
       "taboo": "甲不开仓财物耗散",
       "ancient": "甲属阳木，象征生长、开启。开仓放粮或取用财物，好比春天刚发芽就消耗储存，会导致后续匮乏。",
