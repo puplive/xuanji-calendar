@@ -25,7 +25,7 @@ export default function SetupPage() {
       mbti: 'INTJ'
     });
 
-    if (success) router.push('/home');
+    if (success) router.push('/');
     else alert('计算失败');
     setLoading(false);
   };

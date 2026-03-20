@@ -25,6 +25,7 @@ export async function POST(request: Request) {
       envType: typeof env
     });
 
+    // 检查数据库连接
     if (!env.DB) {
       console.error('数据库连接失败: DB 环境变量未设置');
       return setCorsHeaders(new Response(
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
       ));
     }
 
+    // 检查JWT密钥
     if (!env.JWT_SECRET) {
       console.error('JWT密钥缺失: JWT_SECRET 环境变量未设置');
       return setCorsHeaders(new Response(
