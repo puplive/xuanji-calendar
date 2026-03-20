@@ -1,5 +1,6 @@
 import { D1Database } from '@cloudflare/workers-types';
 import { createLocalDBInstance } from './local-db-mock';
+import { getRequestContext } from '@cloudflare/next-on-pages';
 
 // 定义环境变量类型
 export interface Env {
@@ -278,42 +279,71 @@ export class D1Client {
 }
 
 // 工具函数：从请求中获取环境变量
-export function getEnv(request: Request): Env {
-  // 在实际部署中，这些环境变量由Cloudflare Workers提供
-  // 在本地开发时，通过不同方式获取环境变量
-  try {
-    // 尝试从请求的环境对象获取（Cloudflare Workers 环境）
-    if ((request as any).env) {
-      const env = (request as any).env as Env;
+// export function getEnv(request: Request): Env {
+//   // 在实际部署中，这些环境变量由Cloudflare Workers提供
+//   // 在本地开发时，通过不同方式获取环境变量
+//   try {
+//     // 尝试从请求的环境对象获取（Cloudflare Workers 环境）
+//     if ((request as any).env) {
+//       const env = (request as any).env as Env;
 
-      // 检查DB是否有效
-      if (!env.DB) {
-        // 在本地开发环境中，提供一个模拟的DB实例
-        console.warn('使用本地数据库模拟实例');
-        env.DB = createLocalDBInstance();
+//       // 检查DB是否有效
+//       if (!env.DB) {
+//         // 在本地开发环境中，提供一个模拟的DB实例
+//         console.warn('使用本地数据库模拟实例');
+//         env.DB = createLocalDBInstance();
+//       }
+
+//       return env;
+//     }
+
+//     // Node.js 环境下直接使用 process.env
+//     if (typeof process !== 'undefined' && process.env) {
+//       return {
+//         DB: createLocalDBInstance(), // 在本地环境中始终提供数据库模拟
+//         JWT_SECRET: process.env.JWT_SECRET || 'dev_jwt_secret_key_for_local_testing_only'
+//       };
+//     }
+
+//     // 浏览器环境或其它环境，返回默认值
+//     return {
+//       DB: createLocalDBInstance(),
+//       JWT_SECRET: 'browser_env_jwt_secret'
+//     };
+//   } catch (e) {
+//     // 如果获取不到 env，则返回带模拟数据库的环境
+//     return {
+//       DB: createLocalDBInstance(),
+//       JWT_SECRET: process.env.JWT_SECRET || 'fallback_jwt_secret'
+//     };
+//   }
+// }
+
+export function getEnv(request?: Request): Env {
+  // 生产环境：通过 getRequestContext 获取 Cloudflare 绑定
+  if (typeof getRequestContext === 'function') {
+    try {
+      const { env } = getRequestContext();
+      if (env && env.DB) {
+        return {
+          DB: env.DB,
+          JWT_SECRET: env.JWT_SECRET || process.env.JWT_SECRET,
+        };
       }
-
-      return env;
+    } catch (e) {
+      console.warn('无法从 getRequestContext 获取环境变量', e);
     }
+  }
 
-    // Node.js 环境下直接使用 process.env
-    if (typeof process !== 'undefined' && process.env) {
-      return {
-        DB: createLocalDBInstance(), // 在本地环境中始终提供数据库模拟
-        JWT_SECRET: process.env.JWT_SECRET || 'dev_jwt_secret_key_for_local_testing_only'
-      };
-    }
-
-    // 浏览器环境或其它环境，返回默认值
+  // 本地开发环境：使用模拟数据库或 process.env
+  if (process.env.NODE_ENV === 'development') {
+    console.warn('⚠️ 本地开发模式：使用模拟数据库');
     return {
       DB: createLocalDBInstance(),
-      JWT_SECRET: 'browser_env_jwt_secret'
-    };
-  } catch (e) {
-    // 如果获取不到 env，则返回带模拟数据库的环境
-    return {
-      DB: createLocalDBInstance(),
-      JWT_SECRET: process.env.JWT_SECRET || 'fallback_jwt_secret'
+      JWT_SECRET: process.env.JWT_SECRET || 'dev_jwt_secret',
     };
   }
+
+  // 兜底：直接抛出错误，提醒配置错误
+  throw new Error('无法获取 Cloudflare D1 绑定，请检查部署配置');
 }
