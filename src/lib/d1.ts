@@ -324,10 +324,12 @@ export function getEnv(request?: Request): Env {
   if (typeof getRequestContext === 'function') {
     try {
       const { env } = getRequestContext();
-      if (env && env.DB) {
+      // 使用类型断言访问自定义属性
+      const customEnv = env as any;
+      if (customEnv && customEnv.DB) {
         return {
-          DB: env.DB,
-          JWT_SECRET: env.JWT_SECRET || process.env.JWT_SECRET,
+          DB: customEnv.DB,
+          JWT_SECRET: customEnv.JWT_SECRET || process.env.JWT_SECRET,
         };
       }
     } catch (e) {
@@ -335,7 +337,7 @@ export function getEnv(request?: Request): Env {
     }
   }
 
-  // 本地开发环境：使用模拟数据库或 process.env
+  // 本地开发环境：使用模拟数据库
   if (process.env.NODE_ENV === 'development') {
     console.warn('⚠️ 本地开发模式：使用模拟数据库');
     return {
@@ -344,6 +346,5 @@ export function getEnv(request?: Request): Env {
     };
   }
 
-  // 兜底：直接抛出错误，提醒配置错误
   throw new Error('无法获取 Cloudflare D1 绑定，请检查部署配置');
 }
