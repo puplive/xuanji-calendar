@@ -16,11 +16,11 @@ const MBTI_TYPES = [
 ];
 
 // 星座选项
-const ZODIAC_SIGNS = [
-  '白羊座', '金牛座', '双子座', '巨蟹座',
-  '狮子座', '处女座', '天秤座', '天蝎座',
-  '射手座', '摩羯座', '水瓶座', '双鱼座'
-];
+// const ZODIAC_SIGNS = [
+//   '白羊座', '金牛座', '双子座', '巨蟹座',
+//   '狮子座', '处女座', '天秤座', '天蝎座',
+//   '射手座', '摩羯座', '水瓶座', '双鱼座'
+// ];
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -200,7 +200,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-500" />
                 <input
-                  type="date"
+                  type="datetime-local"
                   name="birthDate"
                   value={formData.birthDate}
                   onChange={handleChange}
@@ -228,7 +228,7 @@ export default function RegisterPage() {
             </div>
 
             {/* 星座 */}
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label className="block text-[10px] text-zinc-500 uppercase tracking-wider mb-2">
                 星座
               </label>
@@ -246,7 +246,7 @@ export default function RegisterPage() {
                   ))}
                 </select>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* 错误提示 */}
