@@ -1,6 +1,7 @@
 // src/lib/strength-engine.ts
 import { Lunar } from 'lunar-javascript';
-import { BaziEngine, Element } from './bazi-engine';
+import { BaziEngine } from './bazi-engine';
+import { Element } from '@/constants/mappings';
 
 export interface StrengthResult {
   score: number;

@@ -11,6 +11,7 @@ import { ShieldAlert, Zap, Lock, TrendingUp, Target, Plus } from 'lucide-react';
 import { WeaknessChart } from '@/components/weakness/WeaknessChart';
 import { useWeakness } from '@/hooks/useWeakness';
 import { useState } from 'react';
+import { Element, ELEMENT_NAMES, MBTI_TRAITS, ZODIAC_ELEMENTS } from '@/constants/mappings';
 
 export default function GrowPage() {
   const { practices, addPractice, completePractice, getWeaknessStats } = useWeakness();

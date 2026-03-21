@@ -7,6 +7,7 @@ import { GoalCard } from '@/components/goals/GoalCard';
 import { ShieldAlert, Sparkles, Compass, Loader2, Calendar, Lightbulb } from 'lucide-react';
 import { useMemo, useState, useEffect } from 'react';
 
+import { Element, ELEMENT_NAMES, MBTI_TRAITS, ZODIAC_ELEMENTS } from '@/constants/mappings';
 // 定义计算模块的类型
 type CalculationModules = {
   calculateProfile: any;
@@ -16,9 +17,6 @@ type CalculationModules = {
   getUserMetaphysics: any;
   Lunar: any;
 };
-
-// 定义五行类型
-type Element = 'jin' | 'mu' | 'shui' | 'huo' | 'tu';
 
 // 延迟加载计算逻辑以优化初始包大小
 const loadCalculationModules = async () => {
@@ -145,26 +143,6 @@ export default function HomePage() {
     }
     if (!riElement) return '五行映射数据异常。';
 
-    // 五行名称映射
-    const elementNames: Record<Element, string> = {
-      mu: '木', huo: '火', tu: '土', jin: '金', shui: '水'
-    };
-
-    // MBTI性格特征映射
-    const mbtiTraits: Record<string, string> = {
-      INTJ: '战略规划', INTP: '逻辑分析', ENTJ: '领导决策', ENTP: '创新思维',
-      INFJ: '深度洞察', INFP: '理想主义', ENFJ: '激励引导', ENFP: '热情探索',
-      ISTJ: '严谨执行', ISFJ: '细致关怀', ESTJ: '高效管理', ESFJ: '社交协调',
-      ISTP: '实践解决', ISFP: '艺术感知', ESTP: '冒险行动', ESFP: '活力表现'
-    };
-
-    // 星座元素映射
-    const zodiacElements: Record<string, string> = {
-      '白羊座': '火', '金牛座': '土', '双子座': '风', '巨蟹座': '水',
-      '狮子座': '火', '处女座': '土', '天秤座': '风', '天蝎座': '水',
-      '射手座': '火', '摩羯座': '土', '水瓶座': '风', '双鱼座': '水'
-    };
-
     // 黄历宜忌分析
     const favorableItems = todayAlmanac.yi;
     const unfavorableItems = todayAlmanac.ji;
@@ -197,52 +175,44 @@ export default function HomePage() {
     const parts: string[] = [];
 
     // 1. 基础状态
-    parts.push(`你的"${elementNames[riElement]}"命格${strength.status}。`);
+    parts.push(`你的"${ELEMENT_NAMES[riElement]}"命格${strength.status}。`);
 
     // 2. 黄历结合
     if (hasFavorableActivity) {
-      parts.push(`今日黄历宜"${favorableItems[0]}"，适宜${mbtiTraits[profile.mbti] || '发挥优势'}。`);
+      parts.push(`今日黄历宜"${favorableItems[0]}"，适宜${MBTI_TRAITS[profile.mbti] || '发挥优势'}。`);
     } else {
       parts.push(`今日天时平平，需${strength.status === '偏弱' || strength.status === '极弱' ? '保守' : '稳健'}行事。`);
     }
 
     // 3. 五行分析
     if (strongestScore > 40) {
-      parts.push(`${elementNames[strongestElement]}元素极旺，${(strength as any).yongShen.includes(strongestElement) ? '此乃喜用神' : '需注意平衡'}。`);
+      parts.push(`${ELEMENT_NAMES[strongestElement]}元素极旺，${(strength as any).yongShen.includes(strongestElement) ? '此乃喜用神' : '需注意平衡'}。`);
     }
 
     if (weakestScore < 15) {
-      parts.push(`${elementNames[weakestElement]}元素偏弱，可适当补充${elementNames[weakestElement]}能量。`);
+      parts.push(`${ELEMENT_NAMES[weakestElement]}元素偏弱，可适当补充${ELEMENT_NAMES[weakestElement]}能量。`);
     }
 
     // 4. 星座与MBTI结合
-    const zodiacElement = zodiacElements[meta.zodiac] || '';
-    if (zodiacElement && zodiacElement === elementNames[riElement].charAt(0)) {
-      parts.push(`${meta.zodiac}的${zodiacElement}象与命格${elementNames[riElement]}相辅相成。`);
+    const zodiacElement = ZODIAC_ELEMENTS[meta.zodiac] || '';
+    if (zodiacElement && zodiacElement === ELEMENT_NAMES[riElement].charAt(0)) {
+      parts.push(`${meta.zodiac}的${zodiacElement}象与命格${ELEMENT_NAMES[riElement]}相辅相成。`);
     }
 
     // 5. 行动建议
     if (strength.status === '偏旺' || strength.status === '极旺') {
-      parts.push(`建议：克制冲动，${mbtiTraits[profile.mbti] ? '善用' + mbtiTraits[profile.mbti] : '理性决策'}。`);
+      parts.push(`建议：克制冲动，${MBTI_TRAITS[profile.mbti] ? '善用' + MBTI_TRAITS[profile.mbti] : '理性决策'}。`);
     } else if (strength.status === '偏弱' || strength.status === '极弱') {
       parts.push(`建议：借助"${todayAlmanac.yi[0] || '静思'}"积累能量，${profile.mbti.includes('E') ? '寻求支持' : '专注内省'}。`);
     } else {
-      parts.push(`建议：平衡发展，结合${mbtiTraits[profile.mbti] || '个人特质'}把握时机。`);
+      parts.push(`建议：平衡发展，结合${MBTI_TRAITS[profile.mbti] || '个人特质'}把握时机。`);
     }
 
     return parts.join(' ');
   };
 
-  // 生成潜在风险
-  const generate = () => {
-    // console.log(todayAlmanac)
-    if (!todayAlmanac) return '';
-    return todayAlmanac.pengZuGan.suggestion+todayAlmanac.pengZuZhi.suggestion
-    // const shensha = ''
-    // const activity = ''
-    // return `检测到潜在风险：今日"${shensha}"活跃，${strength.status}易陷入过度内耗。建议开启"${activity}"修行。`;
-  }
-
+  // 宜忌 建议
+  // const { primaryCategory, suggestion } = classifyHuangli(todayAlmanac.yi, todayAlmanac.ji)
   // 模拟待办目标
   // const mockGoals = [
   //   { id: 1, name: "深度阅读 30min", progress: 45, type: 'study' },
@@ -283,7 +253,7 @@ export default function HomePage() {
               </div>
               <div className='flex items-baseline tracking-tighter'>
                 <span className="text-xl ">{todayAlmanac.solarDate}</span>
-                <span className="text-sm "> {todayAlmanac.week}</span>
+                <span className="text-sm ">&ensp;{todayAlmanac.week}</span>
               </div>
             </div>
             <div className="flex flex-col md:flex-row md:items-center gap-4">
@@ -298,12 +268,14 @@ export default function HomePage() {
                     <p className="text-sm text-emerald-300 leading-snug">
                       {todayAlmanac.yi.slice(0, 3).join(' · ')}
                     </p>
+                    {/* <p className="text-xs ">{classifyHuangli(todayAlmanac.yi, todayAlmanac.ji).suggestion}</p> */}
                   </div>
                   <div className="flex-1 min-w-[120px]">
                     <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">忌</p>
                     <p className="text-sm text-rose-300 leading-snug">
                       {todayAlmanac.ji.slice(0, 3).join(' · ')}
                     </p>
+                    {/* <p className="text-xs ">{classifyHuangli(todayAlmanac.yi, todayAlmanac.ji).suggestion}</p> */}
                   </div>
                 </div>
               </div>
@@ -345,11 +317,10 @@ export default function HomePage() {
         {/* 彭祖百忌 */}
          <div className="mb-6 flex items-center gap-4 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
            <ShieldAlert className="text-red-500 w-5 h-5 flex-shrink-0" />
-           <div className="text-xs text-red-200/80 leading-snug">
-              <p className='text-[14px]'>{todayAlmanac.pengZuGan.taboo}</p>
-              <p className='text-[14px]'>{todayAlmanac.pengZuZhi.taboo}</p>
+           <div className="text-xs leading-snug">
+              <p className='text-[15px] text-red-400/60'>{todayAlmanac.pengZuGan.keyword} {todayAlmanac.pengZuZhi.keyword}</p>
               {/* <Lightbulb className="text-blue-500 w-3 h-3"/> */}
-             {todayAlmanac.pengZuGan.suggestion+todayAlmanac.pengZuZhi.suggestion}
+             <p className='text-xs text-red-200/80'>{todayAlmanac.pengZuGan.advice+todayAlmanac.pengZuZhi.advice}</p>
            </div>
          </div>
         {/* 弱点克制提醒 (PRD 3.6) */}

@@ -15,7 +15,8 @@
 性能调优：“目前粒子连线的双重循环开销较大。请使用‘空间哈希网格（Spatial Hash Grid）’算法优化寻找邻近粒子的过程，确保在低端移动设备上也能维持 60FPS。”
 
  */
-import { Element } from './bazi-engine';
+// import { Element } from './bazi-engine';
+import { Element } from '@/constants/mappings';
 
 export interface VisualConfig {
   color: string;           // 主色调

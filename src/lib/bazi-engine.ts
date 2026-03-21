@@ -43,7 +43,8 @@ AI Coding 提示词建议
 import { Lunar } from 'lunar-javascript';
 
 // 五行定义
-export type Element = 'jin' | 'mu' | 'shui' | 'huo' | 'tu';
+import { Element } from '@/constants/mappings';
+// export type Element = 'jin' | 'mu' | 'shui' | 'huo' | 'tu';
 
 interface EnergyScore {
   jin: number;
