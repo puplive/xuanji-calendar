@@ -156,11 +156,14 @@ export const getUserMetaphysics = (birthDate: Date) => {
   const zhiKey = lunar.getPengZuZhi() as PengZuKey;
   
   return {
+    // 阳历日期
+    solarDate: `${solar.getYear()}/${solar.getMonth()}/${solar.getDay()}`,
+    week: `周${solar.getWeekInChinese()}`,
     // 农历日期：如 二月初二
     lunarDate: `${lunar.getMonthInChinese()}月${lunar.getDayInChinese()}`,
     
     // 干支记年：如 丙午 辛卯 壬戌
-    ganzhi: `${lunar.getYearInGanZhi()} ${lunar.getMonthInGanZhi()} ${lunar.getDayInGanZhi()}`,
+    ganzhi: `${lunar.getYearInGanZhi()}年·${lunar.getMonthInGanZhi()}月·${lunar.getDayInGanZhi()}日`,
     
     // 八字数组：[年柱, 月柱, 日柱, 时柱]
     bazi: lunar.getBaZi(), 

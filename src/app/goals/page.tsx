@@ -114,7 +114,7 @@ export default function GoalsPage() {
                     onClick={() => setNewGoalType(type)}
                     className={`py-2 rounded-xl text-xs font-medium transition-all ${
                       newGoalType === type
-                        ? 'bg-gold-600 text-black'
+                        ? 'bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-white'
                         : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50'
                     }`}
                   >
@@ -136,7 +136,7 @@ export default function GoalsPage() {
                     onClick={() => setNewGoalDays(days)}
                     className={`py-2 rounded-xl text-xs font-medium transition-all ${
                       newGoalDays === days
-                        ? 'bg-gold-600 text-black'
+                        ? 'bg-gold-600 bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-white'
                         : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50'
                     }`}
                   >
@@ -149,7 +149,7 @@ export default function GoalsPage() {
             <div className="flex gap-3 pt-2">
               <button
                 onClick={handleAddGoal}
-                className="flex-1 bg-gold-600 hover:bg-gold-500 text-black font-bold py-3 rounded-2xl transition-all active:scale-95"
+                className="flex-1 bg-gradient-to-r from-[#D4AF37] to-amber-500 hover:from-amber-500 hover:to-[#D4AF37] text-white font-bold py-3 rounded-2xl transition-all active:scale-95"
               >
                 创建目标
               </button>

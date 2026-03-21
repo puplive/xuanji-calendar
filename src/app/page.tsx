@@ -197,11 +197,11 @@ export default function HomePage() {
     const parts: string[] = [];
 
     // 1. 基础状态
-    parts.push(`今日你的"${elementNames[riElement]}"命格${strength.status}。`);
+    parts.push(`你的"${elementNames[riElement]}"命格${strength.status}。`);
 
     // 2. 黄历结合
     if (hasFavorableActivity) {
-      parts.push(`黄历宜"${favorableItems[0]}"，适宜${mbtiTraits[profile.mbti] || '发挥优势'}。`);
+      parts.push(`今日黄历宜"${favorableItems[0]}"，适宜${mbtiTraits[profile.mbti] || '发挥优势'}。`);
     } else {
       parts.push(`今日天时平平，需${strength.status === '偏弱' || strength.status === '极弱' ? '保守' : '稳健'}行事。`);
     }
@@ -276,9 +276,15 @@ export default function HomePage() {
         {/* 今日黄历卡片 */}
         {todayAlmanac && (
           <div className="mb-6 p-6 rounded-2xl bg-gradient-to-r from-white/5 to-white/2 border border-white/10 backdrop-blur-3xl">
-            <div className="flex items-center gap-2 mb-3 text-[#D4AF37]">
-              <Calendar size={14} />
-              <span className="text-[10px] font-bold tracking-widest uppercase">今日黄历</span>
+            <div className="flex justify-between mb-3 text-[#D4AF37]">
+              <div className="flex items-center gap-2">
+                <Calendar size={14} />
+                <span className="text-[10px] font-bold tracking-widest uppercase">今日黄历</span>
+              </div>
+              <div className='flex items-baseline tracking-tighter'>
+                <span className="text-xl ">{todayAlmanac.solarDate}</span>
+                <span className="text-sm "> {todayAlmanac.week}</span>
+              </div>
             </div>
             <div className="flex flex-col md:flex-row md:items-center gap-4">
               <div className="flex-1">
@@ -339,12 +345,12 @@ export default function HomePage() {
         {/* 彭祖百忌 */}
          <div className="mb-6 flex items-center gap-4 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
            <ShieldAlert className="text-red-500 w-5 h-5 flex-shrink-0" />
-           <p className="text-xs text-red-200/80 leading-snug">
+           <div className="text-xs text-red-200/80 leading-snug">
               <p className='text-[14px]'>{todayAlmanac.pengZuGan.taboo}</p>
               <p className='text-[14px]'>{todayAlmanac.pengZuZhi.taboo}</p>
               {/* <Lightbulb className="text-blue-500 w-3 h-3"/> */}
              {todayAlmanac.pengZuGan.suggestion+todayAlmanac.pengZuZhi.suggestion}
-           </p>
+           </div>
          </div>
         {/* 弱点克制提醒 (PRD 3.6) */}
 
