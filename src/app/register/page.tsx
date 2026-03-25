@@ -6,14 +6,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, User, Sparkles, Calendar, MoonStar } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-
+import { MBTI_TRAITS } from '@/constants/mappings';
 // MBTI类型选项
-const MBTI_TYPES = [
-  'INTJ', 'INTP', 'ENTJ', 'ENTP',
-  'INFJ', 'INFP', 'ENFJ', 'ENFP',
-  'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ',
-  'ISTP', 'ISFP', 'ESTP', 'ESFP'
-];
+const MBTI_TYPES = Object.keys(MBTI_TRAITS);
 
 // 星座选项
 // const ZODIAC_SIGNS = [

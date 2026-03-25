@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-
+import { MBTI_TRAITS } from '@/constants/mappings';
 // 定义计算模块的类型
 type CalculationModule = {
   calculateProfile: any;
@@ -90,7 +90,7 @@ export default function ProfilePage() {
     bazi: '---- ---- ---- ----'
   };
 
-  const mbtiTypes = ["INTJ", "INFP", "ENTP", "ENFJ", "ISTJ", "ISFP", "ESTP", "ESFJ"]; // 简化版
+  const mbtiTypes = Object.keys(MBTI_TRAITS);
 
   return (
     <main className="min-h-screen bg-black text-white p-6 pb-32">
