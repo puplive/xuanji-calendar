@@ -13,7 +13,7 @@ import { useWeakness } from '@/hooks/useWeakness';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-const WeaknessChart = dynamic(() => import('@/components/weakness/WeaknessChart'), { ssr: false });
+const WeaknessChart = dynamic(() => import('@/components/weakness/WeaknessChart').then(m => m.WeaknessChart), { ssr: false });
 
 export default function GrowPage() {
   const t = useTranslations('Grow');

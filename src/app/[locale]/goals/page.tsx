@@ -14,7 +14,7 @@ import { useGoals } from '@/hooks/useGoals';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-const GoalChart = dynamic(() => import('@/components/goals/GoalChart'), { ssr: false });
+const GoalChart = dynamic(() => import('@/components/goals/GoalChart').then(m => m.GoalChart), { ssr: false });
 
 export default function GoalsPage() {
   const t = useTranslations('Goals');
