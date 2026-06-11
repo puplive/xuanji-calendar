@@ -186,6 +186,14 @@ function main() {
   console.log('  Removing monolithic _worker.js/...');
   rmSync(WORKER_DIR, { recursive: true });
 
+  // Remove _routes.json — with include:["/*"] it forces a single-worker mode
+  // that bypasses per-route function matching in the functions/ directory.
+  const routesJsonPath = join(STATIC_DIR, '_routes.json');
+  if (existsSync(routesJsonPath)) {
+    console.log('  Removing next-on-pages _routes.json...');
+    rmSync(routesJsonPath);
+  }
+
   // 3. Create functions/ directory structure
   if (existsSync(FUNCTIONS_DIR)) rmSync(FUNCTIONS_DIR, { recursive: true });
   mkdirSync(FUNCTIONS_DIR, { recursive: true });
