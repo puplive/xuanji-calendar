@@ -158,7 +158,7 @@ function routeFilePath(route) {
 // Need to go up from functions/ to root, then into __next-on-pages-dist__
 function importPath(route) {
   const depth = route.slice(1).split('/').filter(Boolean).length; // path segment count
-  const up = Array(depth + 1).fill('..').join('/'); // +1 for functions/
+  const up = Array(depth).fill('..').join('/');
   return `${up}/__next-on-pages-dist__/functions${route}.func.js`;
 }
 
