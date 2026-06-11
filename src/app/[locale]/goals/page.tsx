@@ -4,7 +4,7 @@
  */
 
 "use client";
-// 移除 edge runtime - 页面在客户端渲染，不需要边缘计算
+export const runtime = 'edge';
 
 import { motion } from 'framer-motion';
 import { Sparkles, Plus, Trophy, Calendar, TrendingUp, Target } from 'lucide-react';

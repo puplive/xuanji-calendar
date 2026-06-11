@@ -1,5 +1,5 @@
-"use client"; // 关键：首页现在需要监听本地存储状态
-// 移除 edge runtime - 页面在客户端渲染
+"use client";
+export const runtime = 'edge';
 
 import { useProfile } from '@/hooks/useProfile';
 import { FortuneCanvas } from '@/components/visuals/FortuneCanvas';
