@@ -11,7 +11,18 @@
       "Bash(kill 30891)",
       "Bash(curl -X POST http://localhost:3000/api/auth/register -H \"Content-Type: application/json\" -d '{\"\"email\"\":\"\"test@example.com\"\",\"\"password\"\":\"\"password123\"\",\"\"username\"\":\"\"Test User\"\"}')",
       "Bash(pnpm list:*)",
-      "Bash(curl -s http://localhost:3000/api/profile)"
+      "Bash(curl -s http://localhost:3000/api/profile)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(pnpm dev *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/zh)",
+      "Bash(curl -s -o /dev/null -w \"/zh -> %{http_code}, /en -> %{http_code}, /zh/goals -> %{http_code}, /en/goals -> %{http_code}, /zh/grow -> %{http_code}, /zh/profile -> %{http_code}\\\\n\" http://localhost:3000/zh -o /dev/null -s -w \"%{http_code}\")",
+      "Bash(curl -s -o /dev/null -w \" /en \" http://localhost:3000/en)",
+      "Bash(curl -s -o /dev/null -w \" /zh/goals \" http://localhost:3000/zh/goals)",
+      "Bash(curl -s -o /dev/null -w \" /en/goals \" http://localhost:3000/en/goals)",
+      "Bash(curl -s -o /dev/null -w \" /zh/grow \" http://localhost:3000/zh/grow)",
+      "Bash(npx next *)",
+      "Bash(python3 -c ' *)",
+      "Bash(kill 8691)"
     ]
   }
 }

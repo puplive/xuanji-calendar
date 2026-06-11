@@ -102,6 +102,7 @@
 
 import { motion } from 'framer-motion';
 import { CheckCircle2, Trophy, Target } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 // 1. 完善接口定义，增加 advice 属性
 interface GoalCardProps {
@@ -116,6 +117,7 @@ interface GoalCardProps {
 }
 
 export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
+  const t = useTranslations('GoalCard');
   return (
     <motion.div 
       whileHover={{ y: -2 }}
@@ -129,7 +131,7 @@ export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
           <div>
             <h3 className="text-white font-bold text-lg leading-tight">{goal.name}</h3>
             <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">
-              当前进度: {goal.progress}%
+              {t('progressLabel', { progress: goal.progress })}
             </p>
           </div>
         </div>

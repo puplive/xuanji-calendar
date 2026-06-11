@@ -2,6 +2,9 @@
  * Next.js 配置 for Cloudflare Pages 部署
  */
 import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   compress: true,
@@ -21,4 +24,4 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['lunar-javascript'],
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

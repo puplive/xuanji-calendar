@@ -45,7 +45,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const STORAGE_KEY = 'xuanji_auth';
 const GUEST_USER_ID = 'guest_user';
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({ children, locale = 'zh' }: { children: ReactNode; locale?: string }) {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
     token: null,
@@ -98,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const createGuestUser = (): User => ({
     id: GUEST_USER_ID,
     email: 'guest@xuanji.com',
-    username: '游客',
+    username: locale === 'en' ? 'Guest' : '游客',
     membershipType: 'FREE',
     points: 0,
     badges: [],

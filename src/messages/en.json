@@ -1,0 +1,387 @@
+{
+  "Constants": {
+    "ELEMENT_NAMES": {
+      "mu": "Wood",
+      "huo": "Fire",
+      "tu": "Earth",
+      "jin": "Metal",
+      "shui": "Water"
+    },
+    "MBTI_TRAITS": {
+      "INTJ": "Strategic Planner",
+      "INTP": "Logical Analyst",
+      "ENTJ": "Leadership Driver",
+      "ENTP": "Innovative Thinker",
+      "INFJ": "Deep Insight",
+      "INFP": "Idealism",
+      "ENFJ": "Inspirational Guide",
+      "ENFP": "Passionate Explorer",
+      "ISTJ": "Precise Executor",
+      "ISFJ": "Detailed Caregiver",
+      "ESTJ": "Efficient Manager",
+      "ESFJ": "Social Coordinator",
+      "ISTP": "Problem Solver",
+      "ISFP": "Artistic Perceiver",
+      "ESTP": "Adventurous Action",
+      "ESFP": "Vibrant Performer"
+    },
+    "YI_SUGGESTIONS": {
+      "yi_0": "A good day for quiet prayer. Try 5 minutes of gratitude meditation or journaling.",
+      "yi_1": "Financial energy is active. Tackle money-related tasks on your to-do list, even just 5 minutes.",
+      "yi_2": "Plan your schedule and organize your space to prepare for the next phase.",
+      "yi_3": "Reach out to friends or engage in meaningful social interactions. Practice expressing yourself.",
+      "yi_4": "Learn something new. Tackle that problem you've been putting off.",
+      "yi_5": "Start that new project. Even the smallest step forward counts.",
+      "yi_6": "Pay attention to your body. Today is good for exercise or healthy eating."
+    },
+    "JI_SUGGESTIONS": {
+      "ji_0": "Avoid major social decisions today. Keep a low profile and steer clear of conflicts.",
+      "ji_1": "Hold off on financial matters. Avoid impulse investing or large expenses.",
+      "ji_2": "Travel may face obstacles. Postpone non-essential trips or plan alternatives.",
+      "ji_3": "Don't start new projects today. Focus on refining existing plans first.",
+      "ji_4": "Avoid arguments. Not a good day to sign important legal documents."
+    },
+    "PENGZU_TIANGAN": {
+      "甲": "Do financial inventory first, avoid impulse spending.",
+      "乙": "Start with small-scale experiments or optimize details rather than a full rollout.",
+      "丙": "Stay calm when conflicts arise. Set them aside and revisit later.",
+      "丁": "Keep things as they are for now. Let your ideas 'cool down' first.",
+      "戊": "Stick to research and information gathering today. Don't make final decisions.",
+      "己": "Maintain the status quo. Avoid impulsive breakups or severing ties.",
+      "庚": "Focus on mechanical, repetitive work today. Build the framework, save details for tomorrow.",
+      "辛": "Don't force collaborations that require默契 (unspoken rapport). Give each other space.",
+      "壬": "Be cautious with both finances and emotions today. Avoid major money decisions.",
+      "癸": "Organize your evidence and logic today. Choose another day to argue your case."
+    },
+    "PENGZU_DIZHI": {
+      "子": "Don't make life-changing decisions late at night. Sleep on it first.",
+      "丑": "Prepare your mind and body before important ceremonies. Choose a day when you're fully energized.",
+      "寅": "When feeling grateful, first quiet your mind, then express yourself.",
+      "卯": "Maintain healthy boundaries and let relationships flow naturally.",
+      "辰": "Process emotions promptly. Don't ruminate alone — talk to a friend or exercise to release.",
+      "巳": "Double-check your luggage and plans before traveling. Measure twice, cut once.",
+      "午": "If you want change, let your anger cool first. Let reason, not emotion, drive action.",
+      "未": "Consult a real doctor when unwell. Don't self-diagnose or self-medicate.",
+      "申": "Before moving or changing beds, 'warm up' the new space with relaxing activities.",
+      "酉": "If you're in a bad mood, skip social dinners. Process your feelings alone and meet another day.",
+      "戌": "Keep dinner light. Give your digestive system a break for better sleep.",
+      "亥": "Before marriage, ensure complete honesty between partners. Don't let 'settling' become a future regret."
+    },
+    "WEAKNESS_NAMES": {
+      "procrastination": "Procrastination",
+      "anxiety": "Anxiety & Overthinking",
+      "perfectionism": "Perfectionism",
+      "socialAvoidance": "Social Avoidance",
+      "moodSwings": "Mood Swings",
+      "indecision": "Indecision"
+    },
+    "WEAKNESS_BAZI_CAUSES": {
+      "procrastination": "Excessive creativity without output channel — more daydreaming than action",
+      "anxiety": "Self-pressure from conflicting elemental energies, leading to mental strain",
+      "perfectionism": "Strong chart with excessive planning energy, over-pursuing perfect blueprints",
+      "socialAvoidance": "Weak peer support in chart, lacking emotional energy flow",
+      "moodSwings": "Weak core energy with chaotic external influences, emotions ungrounded",
+      "indecision": "Hidden wealth element or excessive planning energy drowning out action"
+    },
+    "WEAKNESS_MBTI_CAUSES": {
+      "procrastination": "Typical P-type trait: pursuing possibilities while neglecting completion",
+      "anxiety": "Unhealthy Ni-Ti loop (Introverted Intuition - Introverted Thinking)",
+      "perfectionism": "J-type plus idealism,苛求 (nitpicking) every detail",
+      "socialAvoidance": "Excessive Introversion (I), uncomfortable with interpersonal energy exchange",
+      "moodSwings": "F-type hypersensitivity, emotions easily swayed by external reactions",
+      "indecision": "P-type with underdeveloped decision-making function"
+    },
+    "WEAKNESS_PRACTICES": {
+      "procrastination_0": "25-minute Pomodoro session",
+      "procrastination_1": "List today's 3 most dreaded tasks and do one first",
+      "anxiety_0": "5-minute mindful breathing",
+      "anxiety_1": "Write down anxious thoughts, then physically destroy the paper",
+      "perfectionism_0": "Create an 'imperfect' first draft",
+      "perfectionism_1": "Intentionally leave one imperfect detail",
+      "socialAvoidance_0": "Proactively greet an acquaintance",
+      "socialAvoidance_1": "Attend a small social gathering and journal the experience",
+      "moodSwings_0": "Journal emotional triggers as they arise",
+      "moodSwings_1": "5-minute mindfulness check-in with your emotions",
+      "indecision_0": "Set a 10-minute decision deadline",
+      "indecision_1": "Pick one direction and try it on a trial basis"
+    },
+    "WEAKNESS_HEXAGRAM_NAMES": {
+      "procrastination": "Mountain over Water (Youthful Ignorance)",
+      "anxiety": "Earth over Fire (Darkening of the Light)",
+      "perfectionism": "Heaven (The Creative)",
+      "socialAvoidance": "Mountain over Lake (Decrease)",
+      "moodSwings": "Wind over Thunder (Increase)",
+      "indecision": "Water over Thunder (Initial Difficulty)"
+    },
+    "WEAKNESS_HEXAGRAM_INTERPRETATIONS": {
+      "procrastination": "The Meng hexagram symbolizes the chaos of enlightenment's infancy, requiring decisive action to pierce the fog. Procrastination traps you in this fog — only bold engagement brings clarity.",
+      "anxiety": "The Mingyi hexagram shows light wounded. When anxious, the heart is in darkness. The remedy is stillness — gather your spirit and wait for the light to return.",
+      "perfectionism": "The Qian hexagram's 'flying dragon in the heavens' reminds us that even the 'hidden dragon' must wait. Perfectionism seeks to leap to the summit, ignoring the virtue of gradual progress.",
+      "socialAvoidance": "The Sun hexagram subtracts from below to benefit above. Social avoidance stems from self-enclosure. Let down your guard to receive nourishment from relationships.",
+      "moodSwings": "The Yi hexagram joins wind and thunder. When emotions storm, channel their momentum upward rather than being consumed by them.",
+      "indecision": "The Zhun hexagram marks birth's difficulty. New beginnings demand decisive action — hesitation only deepens the struggle."
+    },
+    "STRENGTH_STATUS": {
+      "偏旺": "Slightly Excessive",
+      "极旺": "Extremely Excessive",
+      "偏弱": "Slightly Deficient",
+      "极弱": "Extremely Deficient",
+      "中和": "Balanced"
+    }
+  },
+  "Navigation": {
+    "home": "Home",
+    "goal": "Goals",
+    "grow": "Growth",
+    "user": "Profile"
+  },
+  "Home": {
+    "title": "XUANJI AI",
+    "subtitle": "Cyber Metaphysics Lab",
+    "almanacTitle": "Today's Almanac",
+    "yi": "Auspicious",
+    "ji": "Inauspicious",
+    "energyTitle": "Energy Status",
+    "strengthLabel": "STRENGTH",
+    "loading": "Unable to parse metaphysical data.",
+    "noAlmanac": "Today your \"{element}\" element is influenced by celestial forces. Leverage your {mbti} strategic thinking for key decisions this afternoon.",
+    "elementStrong": "{element} element is extremely strong — {yongShen}",
+    "elementWeak": "{element} element is deficient. Consider supplementing {energy} energy.",
+    "favorableAdvice": "Today's almanac favors \"{item}\" — a good day to leverage your {traits}.",
+    "neutralAdvice": "No strong celestial signals. Proceed with a {style} approach.",
+    "actionAdviceWang": "Advice: channel excess energy through {traits} rather than impulsive action.",
+    "actionAdviceRuo": "Advice: build energy through \"{item}\" — {action}.",
+    "actionAdviceBalance": "Advice: maintain balance by combining {traits} with mindful planning.",
+    "zodiacSynergy": "Your {zodiac} ({zodiacElement} sign) resonates harmoniously with your {element} destiny element.",
+    "pengzuKeyword": "Pengzu's Warnings",
+    "yongShenPositive": "a favorable spirit",
+    "yongShenNegative": "needs balance",
+    "energyStatus": "Your \"{element}\" destiny: {status}.",
+    "seekSupport": "seek support from others",
+    "focusIntrospection": "focus on introspection",
+    "defaultItem": "quiet reflection"
+  },
+  "Goals": {
+    "pageTitle": "GOALS",
+    "pageSubtitle": "Goal Management · Energy Alignment",
+    "addGoalTitle": "New Practice Goal",
+    "goalNameLabel": "Goal Name",
+    "goalNamePlaceholder": "e.g., Meditate for 15 minutes daily",
+    "goalTypeLabel": "Goal Type",
+    "cycleLabel": "Practice Cycle (Days)",
+    "createButton": "Create Goal",
+    "cancelButton": "Cancel",
+    "weeklyStats": "Weekly Progress",
+    "pointsStats": "Practice Points",
+    "countUnit": "times",
+    "daysUnit": "days",
+    "chartTitle": "Statistics",
+    "dailyAdvice": "Today's energy favors breakthroughs. Push through key bottlenecks.",
+    "emptyTitle": "No goals yet. Tap + to begin your practice.",
+    "completedTitle": "Completed Goals",
+    "completedOn": "Completed on",
+    "completedLabel": "Done",
+    "goalTypeLabels": {
+      "study": "Study",
+      "health": "Health",
+      "work": "Work",
+      "emotion": "Emotion",
+      "other": "Other"
+    }
+  },
+  "GoalChart": {
+    "empty": "No data yet. Start setting goals to view statistics.",
+    "dailyTrend": "Daily Check-in Trend",
+    "checkinLegend": "Check-ins",
+    "typeDistribution": "Goal Type Distribution",
+    "wuxingGrowth": "Five Elements Growth",
+    "avgProgress": "Avg Progress",
+    "wuxingLegend": "Elements Growth",
+    "typeLabels": {
+      "study": "Study",
+      "health": "Health",
+      "work": "Work",
+      "emotion": "Emotion",
+      "other": "Other"
+    }
+  },
+  "GoalCard": {
+    "progressLabel": "Progress: {progress}%"
+  },
+  "GoalItem": {
+    "progressLabel": "{days} days / {totalDays} days"
+  },
+  "Grow": {
+    "pageTitle": "WEAKNESS",
+    "pageSubtitle": "Weakness Overcoming · Against the Wind",
+    "addTitle": "Identify New Weakness",
+    "nameLabel": "Weakness Name",
+    "namePlaceholder": "e.g., Overthinking",
+    "descLabel": "Description",
+    "descPlaceholder": "Describe how this weakness affects your life...",
+    "confirmButton": "Add",
+    "cancelButton": "Cancel",
+    "completionRate": "Overall Completion",
+    "streak": "Current Streak",
+    "streakUnit": "days",
+    "todayPractice": "Today's Practice",
+    "completeButton": "Complete Today's Practice",
+    "practiceStats": "Practice Stats",
+    "weaknessTypes": "Common Weakness Types",
+    "deepAnalysis": "Deep Analysis Report",
+    "analysisBased": "Based on your BaZi (Year of {year}) and {mbti} traits",
+    "weaknessPresetLabels": {
+      "procrastination": "Procrastination",
+      "overthinking": "Overthinking",
+      "moodSwings": "Mood Swings",
+      "distraction": "Distraction",
+      "perfectionism": "Perfectionism"
+    },
+    "weaknessPresetDescs": {
+      "procrastination": "Always putting off important tasks",
+      "overthinking": "Analysis paralysis and decision fatigue",
+      "moodSwings": "Difficulty managing emotions",
+      "distraction": "Struggles with sustained focus",
+      "perfectionism": "Perfect standards blocking progress"
+    },
+    "demoTodayPractice": "Fight 'Idealism'",
+    "demoTodayDesc": "Your creative energy is overloaded today, making it easy to get trapped in perfect blueprints. Practice instruction: go do the one thing you most want to avoid — just 5 minutes.",
+    "demoDeepAnalysis": "Your career blind spots show a need for stronger execution. Combined with today's almanac favoring 'rest,' start by organizing your environment."
+  },
+  "WeaknessChart": {
+    "empty": "No practice records yet. Start overcoming weaknesses to see stats.",
+    "completionRateLabel": "Completion Rate",
+    "maxStreakLabel": "Longest Streak",
+    "streakUnit": "days",
+    "completionTrend": "Completion Trend",
+    "actualRate": "Actual Rate",
+    "targetLine": "Target",
+    "weaknessDistribution": "Weakness Distribution",
+    "ratio": "Ratio",
+    "streakDistribution": "Streak Distribution",
+    "streakAxisLabel": "Consecutive Days",
+    "countAxisLabel": "Count",
+    "occurrence": "Occurrences",
+    "weaknessTypeNames": {
+      "procrastination": "Procrastination",
+      "overthinking": "Overthinking",
+      "moodSwings": "Mood Swings",
+      "distraction": "Distraction",
+      "perfectionism": "Perfectionism"
+    }
+  },
+  "PracticeCard": {
+    "header": "Daily Practice · Weakness Training",
+    "against": "Fight {name}",
+    "streakBadge": "STREAK {count}"
+  },
+  "Profile": {
+    "pageTitle": "ARCHIVE",
+    "version": "V{version}",
+    "birthSection": "Time & Space · Birthday",
+    "lunarLabel": "Lunar Calendar",
+    "zodiacLabel": "Zodiac Sign",
+    "baziLabel": "BaZi (Four Pillars)",
+    "mbtiSection": "Cognitive Model · Personality",
+    "aiAssessment": "AI-powered Assessment (Coming Soon)",
+    "loginButton": "Log In",
+    "logoutButton": "Log Out",
+    "resetData": "Reset all local data",
+    "waitingInput": "Awaiting input..."
+  },
+  "Login": {
+    "pageTitle": "Log In",
+    "pageSubtitle": "Begin your personal growth journey",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "loginButton": "Log In",
+    "loadingButton": "Logging in...",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Register Now",
+    "orDivider": "or",
+    "guestTitle": "Want to try it first?",
+    "guestButton": "Continue as Guest",
+    "guestNote": "In guest mode, all data is stored locally in your browser. Register to sync data to the cloud.",
+    "footer": "Xuanji Calendar · Cyber Metaphysics Growth Tool",
+    "footerNote": "All AI-generated content is for entertainment only",
+    "emailPlaceholder": "your@email.com",
+    "passwordPlaceholder": "••••••••"
+  },
+  "Register": {
+    "pageTitle": "Create Account",
+    "pageSubtitle": "Complete your profile for personalized guidance",
+    "emailLabel": "Email *",
+    "emailPlaceholder": "your@email.com",
+    "usernameLabel": "Username (Optional)",
+    "usernamePlaceholder": "Choose your username",
+    "passwordLabel": "Password *",
+    "passwordPlaceholder": "At least 6 characters",
+    "confirmLabel": "Confirm Password *",
+    "confirmPlaceholder": "Enter password again",
+    "personalInfo": "Personal Info (Optional)",
+    "birthLabel": "Birth Date",
+    "mbtiLabel": "MBTI Type",
+    "mbtiPlaceholder": "Select your MBTI type",
+    "registerButton": "Create Account",
+    "loadingButton": "Registering...",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Log In",
+    "privacyNotice": "By registering, you agree to our {link}. All data is encrypted for your privacy.",
+    "privacyLink": "Privacy Policy",
+    "footer": "Xuanji Calendar · Cyber Metaphysics Growth Tool",
+    "errorPasswordMismatch": "Passwords do not match",
+    "errorPasswordLength": "Password must be at least 6 characters"
+  },
+  "Setup": {
+    "title": "Initialize Your Destiny Chart",
+    "loading": "Calculating celestial patterns...",
+    "submit": "Begin Your Journey"
+  },
+  "Disclaimer": {
+    "title": "Notice & Disclaimer",
+    "point1": "1. This product is designed as a personal growth assistant and entertainment tool. All content (including but not limited to daily guidance and compatibility reports) is AI-generated and does not constitute medical, psychological, or professional legal advice.",
+    "point2": "2. Results are based on traditional folk logic and personality models, for entertainment reference only. Do not use them as the sole basis for major decisions (investments, marriage, medical treatment).",
+    "point3": "3. Your personal birth information is encrypted and stored locally by default. Enabling cloud sync constitutes your agreement to store encrypted, anonymized data on our servers.",
+    "agreeButton": "I Understand & Agree"
+  },
+  "Paywall": {
+    "title": "Unlock Deep Connection Insights",
+    "feature1": "Complete 3-year relationship energy forecast,",
+    "feature2": "BaZi-based \"Destiny Lightning Rod\" analysis,",
+    "feature3": "and AI-generated 3000-word compatibility guide.",
+    "ctaButton": "Unlock Now · $9.99",
+    "terms": "By tapping, you agree to our Terms of Service"
+  },
+  "Share": {
+    "saveButton": "Save Poster to Album",
+    "scanLabel": "Scan to unlock your destiny chart",
+    "defaultGuidance": "Logic is your skeleton, intuition is your eyes. Today, root deep and expand wide."
+  },
+  "Auth": {
+    "guestUsername": "Guest",
+    "errorLoginRequired": "Email and password are required",
+    "errorInvalidCredentials": "Email or password is incorrect",
+    "errorServerError": "Internal server error",
+    "errorEmailTaken": "This email is already registered",
+    "errorConfig": "Server configuration error: JWT secret missing",
+    "errorDB": "Database connection failed"
+  },
+  "AI": {
+    "dailyPrompt": "You are a growth coach blending Eastern and Western wisdom.\nUser Personality: {mbti}, Zodiac: {zodiac}\nToday's Gan-Zhi: {ganzhi}, Auspicious: {yi}, Inauspicious: {ji}\nGenerate a daily growth guidance within 100 words.",
+    "oracleSystem": "You are a \"Cyber Metaphysics Master\" skilled in Eastern destiny analysis (BaZi, Zi Wei Dou Shu), Western astrology, and modern psychology (MBTI).\nUser data: MBTI={mbti}, Energy={strength}\nStyle requirement: Cyberpunk + Zen\nRespond in the user's language.",
+    "matchPrompt": "You are a timeless destiny matchmaker. Based on the data below, write a \"Cyber Destiny\" compatibility report for two users.\n\n【User A】MBTI: {mbtiA}, Day Master Energy: {strengthA}\n【User B】MBTI: {mbtiB}, Day Master Energy: {strengthB}\n【System】Match Score: {score}%, Tags: {tags}\n\nOutput format:\n1. [Resonance Field]: Poetic description of their energy interplay.\n2. [Anchor Points]: Based on BaZi, identify their complementary traits.\n3. [Code of Conduct]: A unique mantra for their relationship.\nRespond in the user's language.",
+    "mockDaily": "Today's 'Gui Water' energy is abundant. Combined with your INTJ deep thinking, it's a good day to review long-term goals. Avoid travel; focus on quiet reading.",
+    "mockOracle": "Your Ni function is nourished by 'Gui Shui' today, heightening intuition. Suggestions: 1. Complete that architecture design you've been putting off; 2. Disconnect from digital devices after 8pm."
+  },
+  "Match": {
+    "tagSoulmate": "Soul Resonance",
+    "tagDestiny": "Destiny Pull",
+    "tagComplement": "Complementary",
+    "tagEnduring": "Gentle Flow",
+    "tagChallenge": "Break-in Period",
+    "tagCollision": "Personality Clash",
+    "adviceHigh": "Strong magnetic resonance. Ideal for starting long-term goals together.",
+    "adviceLow": "Maintain independent space. Use包容 (acceptance) to dissolve energetic conflicts.",
+    "mockReport": "Your meeting was a predestined trigger. A's rigorous logic (INTJ) structures B's leaping energy, while B's emotional field nourishes A's dry elemental balance..."
+  }
+}

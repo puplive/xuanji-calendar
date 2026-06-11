@@ -1,25 +1,26 @@
 "use client";
-// 移除 edge runtime - 页面在客户端渲染
 
 import { useProfile } from '@/hooks/useProfile';
-import { Calendar, Brain, Cpu, Hash, ChevronRight } from 'lucide-react';
+import { Calendar, Brain, Cpu, ChevronRight } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { MBTI_TRAITS } from '@/constants/mappings';
-// 定义计算模块的类型
+import { useTranslations } from 'next-intl';
+
 type CalculationModule = {
   calculateProfile: any;
 };
 
-// 延迟加载命理计算模块
 const loadCalculationModule = async () => {
   const { calculateProfile } = await import('@/lib/profile-utils');
   return { calculateProfile };
 };
 
 export default function ProfilePage() {
+  const t = useTranslations('Profile');
   const router = useRouter();
   const { profile, isGuest, updateProfile } = useProfile();
   const { logout } = useAuth();
@@ -28,13 +29,12 @@ export default function ProfilePage() {
 
   const setLogin = ()=>{
     if(isGuest){
-      router.push('/login'); // 登录成功后跳转到首页
+      router.push('/login');
     }else{
       logout()
     }
   }
 
-  // 异步加载计算模块
   useEffect(() => {
     let isCancelled = false;
 
@@ -43,8 +43,6 @@ export default function ProfilePage() {
         const module = await loadCalculationModule();
         if (!isCancelled) {
           setCalculationModule(module);
-
-          // 执行计算
           if (profile.birthDate) {
             try {
               const result = module.calculateProfile(new Date(profile.birthDate));
@@ -61,13 +59,9 @@ export default function ProfilePage() {
     };
 
     loadModule();
-
-    return () => {
-      isCancelled = true;
-    };
+    return () => { isCancelled = true; };
   }, [profile.birthDate]);
 
-  // 当 birthDate 改变时重新计算
   useEffect(() => {
     if (calculationModule && profile.birthDate) {
       try {
@@ -82,10 +76,9 @@ export default function ProfilePage() {
     }
   }, [profile.birthDate, calculationModule]);
 
-  // 如果日期无效，给出一套占位数据，防止报错
   const displayData = meta || {
-    lunarDate: '等待输入...',
-    zodiac: '等待输入...',
+    lunarDate: t('waitingInput'),
+    zodiac: t('waitingInput'),
     ganzhi: { year: '--', month: '--', day: '--' },
     bazi: '---- ---- ---- ----'
   };
@@ -95,27 +88,26 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-black text-white p-6 pb-32">
       <header className="mb-10 pt-8 flex justify-between items-center">
-        <h1 className="text-3xl font-black italic tracking-tighter">ARCHIVE</h1>
-        <div className="px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-[10px] text-gold-500 font-mono">
-          V0.2.0
+        <h1 className="text-3xl font-black italic tracking-tighter">{t('pageTitle')}</h1>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <div className="px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-[10px] text-gold-500 font-mono">
+            {t('version', { version: '0.2.0' })}
+          </div>
         </div>
       </header>
 
-      {/* 1. 生日设置区 (阳历/阴历/八字) */}
       <section className="mb-8 space-y-4">
         <div className="flex items-center gap-2 px-2 text-zinc-500">
           <Calendar size={14} />
-          <span className="text-[10px] font-bold tracking-widest uppercase">时空定位 · 生日</span>
+          <span className="text-[10px] font-bold tracking-widest uppercase">{t('birthSection')}</span>
         </div>
 
         <div className="p-6 bg-zinc-900/50 rounded-[2rem] border border-white/5 backdrop-blur-3xl">
           <input
             type="datetime-local"
-            // 增加容错：如果 profile.birthDate 为空，显示空字符串
             value={profile.birthDate || ""}
             onChange={(e) => {
-                console.log(e.target.value)
-              // 只有当输入完整时才更新状态
               if (e.target.value) {
                 updateProfile({ birthDate: e.target.value });
               }
@@ -125,18 +117,18 @@ export default function ProfilePage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-black/40 rounded-2xl border border-white/5">
-              <p className="text-[10px] text-zinc-500 mb-1">阴历 (Lunar)</p>
+              <p className="text-[10px] text-zinc-500 mb-1">{t('lunarLabel')}</p>
               <p className="text-sm font-medium">{displayData.lunarDate}</p>
             </div>
             <div className="p-4 bg-black/40 rounded-2xl border border-white/5">
-              <p className="text-[10px] text-zinc-500 mb-1">星座 (Zodiac)</p>
+              <p className="text-[10px] text-zinc-500 mb-1">{t('zodiacLabel')}</p>
               <p className="text-sm font-medium">{displayData.zodiac}</p>
             </div>
           </div>
 
           <div className="mt-4 p-4 bg-[#D4AF37]/5 rounded-2xl border border-[#D4AF37]/10">
             <div className="flex items-center gap-2 mb-2 text-[#D4AF37]">
-              <span className="text-[10px] font-bold">先天八字 (BaZi)</span>
+              <span className="text-[10px] font-bold">{t('baziLabel')}</span>
             </div>
             <p className="text-lg font-mono tracking-widest text-[#D4AF37]/80 italic">
               {displayData.bazi}
@@ -145,15 +137,13 @@ export default function ProfilePage() {
         </div>
       </section>
 
-      {/* 2. MBTI 设置区 */}
       <section className="mb-8 space-y-4">
         <div className="flex items-center gap-2 px-2 text-zinc-500">
           <Brain size={14} />
-          <span className="text-[10px] font-bold tracking-widest uppercase">认知模型 · 性格</span>
+          <span className="text-[10px] font-bold tracking-widest uppercase">{t('mbtiSection')}</span>
         </div>
 
         <div className="p-6 bg-zinc-900/50 rounded-[2rem] border border-white/5">
-
           <div className="flex flex-wrap gap-2">
             {mbtiTypes.map(type => {
                 const isSelected = profile.mbti === type;
@@ -171,7 +161,6 @@ export default function ProfilePage() {
                 >
                     {type}
 
-                    {/* 选中时的光束微动效：在按钮底部增加一根极细的金线 */}
                     {isSelected && (
                     <motion.div
                         layoutId="active-mbti-glow"
@@ -186,14 +175,13 @@ export default function ProfilePage() {
           <div className="mt-6 flex items-center justify-between p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20 cursor-pointer group">
              <div className="flex items-center gap-3">
                <Cpu size={18} className="text-blue-400" />
-               <span className="text-xs text-blue-200">AI 对话式测评 (未开启)</span>
+               <span className="text-xs text-blue-200">{t('aiAssessment')}</span>
              </div>
              <ChevronRight size={14} className="text-blue-400 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </section>
 
-      {/* 登录 退出 */}
       <button
           onClick={() => setLogin()}
           className={`
@@ -203,15 +191,14 @@ export default function ProfilePage() {
           }
           `}
       >
-          {isGuest? '登录': '退出'}
+          {isGuest ? t('loginButton') : t('logoutButton')}
       </button>
 
-      {/* 3. 数据重置 (隐私保护) */}
       <button
         onClick={() => { localStorage.clear(); window.location.reload(); }}
         className="w-full py-4 text-xs text-zinc-700 hover:text-red-500 transition-colors italic underline"
       >
-        重置所有本地时空数据
+        {t('resetData')}
       </button>
     </main>
   );

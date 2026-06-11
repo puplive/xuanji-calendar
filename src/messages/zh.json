@@ -1,0 +1,388 @@
+{
+  "Navigation": {
+    "home": "首页",
+    "goal": "目标",
+    "grow": "成长",
+    "user": "我的"
+  },
+  "Home": {
+    "title": "XUANJI AI",
+    "subtitle": "Cyber Metaphysics Lab",
+    "almanacTitle": "今日黄历",
+    "yi": "宜",
+    "ji": "忌",
+    "energyTitle": "当前能量状态",
+    "strengthLabel": "STRENGTH",
+    "loading": "命理数据解析异常。",
+    "noAlmanac": "今日你的\"{element}\"元素受天时影响。建议结合 {mbti} 的策略性，在下午完成核心决策。",
+    "elementStrong": "{element}元素极旺，{yongShen}",
+    "elementWeak": "{element}元素偏弱，可适当补充{energy}能量。",
+    "favorableAdvice": "今日黄历宜\"{item}\"，适宜{traits}。",
+    "neutralAdvice": "今日天时平平，需{style}行事。",
+    "actionAdviceWang": "建议：克制冲动，善用{traits}。",
+    "actionAdviceRuo": "建议：借助\"{item}\"积累能量，{action}。",
+    "actionAdviceBalance": "建议：平衡发展，结合{traits}把握时机。",
+    "zodiacSynergy": "{zodiac}的{zodiacElement}象与命格{element}相辅相成。",
+    "pengzuKeyword": "彭祖百忌",
+    "yongShenPositive": "此乃喜用神",
+    "yongShenNegative": "需注意平衡",
+    "energyStatus": "你的\"{element}\"命格{status}。",
+    "seekSupport": "寻求支持",
+    "focusIntrospection": "专注内省",
+    "defaultItem": "静思"
+  },
+  "Goals": {
+    "pageTitle": "GOALS",
+    "pageSubtitle": "目标管理 · 能量定见",
+    "addGoalTitle": "新增修行目标",
+    "goalNameLabel": "目标名称",
+    "goalNamePlaceholder": "例如：每日冥想15分钟",
+    "goalTypeLabel": "目标类型",
+    "cycleLabel": "修行周期（天）",
+    "createButton": "创建目标",
+    "cancelButton": "取消",
+    "weeklyStats": "本周达成",
+    "pointsStats": "修行点数",
+    "countUnit": "次",
+    "daysUnit": "天",
+    "chartTitle": "数据统计",
+    "dailyAdvice": "今日日值'成'日，适合突破关键瓶颈。",
+    "emptyTitle": "暂无修行目标，点击上方 + 开启",
+    "completedTitle": "已完成目标",
+    "completedOn": "完成于",
+    "completedLabel": "已完成",
+    "goalTypeLabels": {
+      "study": "学习",
+      "health": "健康",
+      "work": "工作",
+      "emotion": "情绪",
+      "other": "其他"
+    }
+  },
+  "GoalChart": {
+    "empty": "暂无数据，开始设定目标以查看统计",
+    "dailyTrend": "每日打卡趋势",
+    "checkinLegend": "打卡次数",
+    "typeDistribution": "目标类型分布",
+    "wuxingGrowth": "五行成长维度",
+    "avgProgress": "平均进度",
+    "wuxingLegend": "五行成长",
+    "typeLabels": {
+      "study": "学习",
+      "health": "健康",
+      "work": "工作",
+      "emotion": "情绪",
+      "other": "其他"
+    }
+  },
+  "GoalCard": {
+    "progressLabel": "当前进度: {progress}%"
+  },
+  "GoalItem": {
+    "progressLabel": "已坚持 {days} 天 / 共 {totalDays} 天"
+  },
+  "Grow": {
+    "pageTitle": "WEAKNESS",
+    "pageSubtitle": "弱点克服 · 逆风修行",
+    "addTitle": "识别新弱点",
+    "nameLabel": "弱点名称",
+    "namePlaceholder": "例如：过度内耗",
+    "descLabel": "弱点描述",
+    "descPlaceholder": "详细描述这个弱点如何影响你的生活...",
+    "confirmButton": "确认添加",
+    "cancelButton": "取消",
+    "completionRate": "整体完成率",
+    "streak": "连续坚持",
+    "streakUnit": "天",
+    "todayPractice": "今日修行",
+    "completeButton": "完成今日对抗",
+    "practiceStats": "修行统计",
+    "weaknessTypes": "常见弱点类型",
+    "deepAnalysis": "深度分析报告",
+    "analysisBased": "基于你的八字命理（{year}年）与MBTI（{mbti}）特质分析得出",
+    "weaknessPresetLabels": {
+      "procrastination": "拖延症",
+      "overthinking": "内耗",
+      "moodSwings": "情绪波动",
+      "distraction": "注意力分散",
+      "perfectionism": "完美主义"
+    },
+    "weaknessPresetDescs": {
+      "procrastination": "总是推迟重要任务",
+      "overthinking": "过度思考导致决策困难",
+      "moodSwings": "情绪管理能力不足",
+      "distraction": "难以保持专注",
+      "perfectionism": "追求完美阻碍进度"
+    },
+    "demoTodayPractice": "对抗'空想主义'",
+    "demoTodayDesc": "今日你的'食伤'能量过重，容易陷入完美的蓝图而迟迟不动手。修行指令：立刻去做那件你最想逃避的 5 分钟小事。",
+    "demoDeepAnalysis": "从八字财官印看你的职业盲点，需加强执行与落地能力。结合今日黄历宜'安床'，建议从环境整顿开始。"
+  },
+  "WeaknessChart": {
+    "empty": "暂无修行记录，开始克服弱点以查看统计",
+    "completionRateLabel": "完成率",
+    "maxStreakLabel": "最高连续",
+    "streakUnit": "天",
+    "completionTrend": "完成率趋势",
+    "actualRate": "实际完成率",
+    "targetLine": "目标线",
+    "weaknessDistribution": "弱点类型分布",
+    "ratio": "占比",
+    "streakDistribution": "连续天数分布",
+    "streakAxisLabel": "连续天数",
+    "countAxisLabel": "次数",
+    "occurrence": "出现次数",
+    "weaknessTypeNames": {
+      "procrastination": "拖延症",
+      "overthinking": "内耗",
+      "moodSwings": "情绪波动",
+      "distraction": "注意力分散",
+      "perfectionism": "完美主义"
+    }
+  },
+  "PracticeCard": {
+    "header": "每日修行 · 弱点克制",
+    "against": "对抗{name}",
+    "streakBadge": "STREAK {count}"
+  },
+  "Profile": {
+    "pageTitle": "ARCHIVE",
+    "version": "V{version}",
+    "birthSection": "时空定位 · 生日",
+    "lunarLabel": "阴历 (Lunar)",
+    "zodiacLabel": "星座 (Zodiac)",
+    "baziLabel": "先天八字 (BaZi)",
+    "mbtiSection": "认知模型 · 性格",
+    "aiAssessment": "AI 对话式测评 (未开启)",
+    "loginButton": "登录",
+    "logoutButton": "退出",
+    "resetData": "重置所有本地时空数据",
+    "waitingInput": "等待输入..."
+  },
+  "Login": {
+    "pageTitle": "登录玄机日历",
+    "pageSubtitle": "开启你的个人成长修行之旅",
+    "emailLabel": "邮箱地址",
+    "passwordLabel": "密码",
+    "loginButton": "登录",
+    "loadingButton": "登录中...",
+    "noAccount": "还没有账户？",
+    "registerLink": "立即注册",
+    "orDivider": "或",
+    "guestTitle": "想先体验一下？",
+    "guestButton": "游客模式继续",
+    "guestNote": "游客模式下，所有数据将仅保存在本地浏览器中。注册后可将数据同步到云端。",
+    "footer": "玄机日历 · 科技玄学个人成长工具",
+    "footerNote": "所有AI生成内容仅供娱乐参考",
+    "emailPlaceholder": "your@email.com",
+    "passwordPlaceholder": "••••••••"
+  },
+  "Register": {
+    "pageTitle": "创建账户",
+    "pageSubtitle": "完善个人信息以获得个性化玄学指导",
+    "emailLabel": "邮箱地址 *",
+    "emailPlaceholder": "your@email.com",
+    "usernameLabel": "用户名（可选）",
+    "usernamePlaceholder": "选择你的用户名",
+    "passwordLabel": "密码 *",
+    "passwordPlaceholder": "至少6位字符",
+    "confirmLabel": "确认密码 *",
+    "confirmPlaceholder": "再次输入密码",
+    "personalInfo": "个性化信息（可选）",
+    "birthLabel": "出生日期",
+    "mbtiLabel": "MBTI人格类型",
+    "mbtiPlaceholder": "选择你的MBTI类型",
+    "registerButton": "创建账户",
+    "loadingButton": "注册中...",
+    "hasAccount": "已有账户？",
+    "loginLink": "立即登录",
+    "privacyNotice": "注册即表示你同意我们的 {link}。所有数据将加密存储，确保你的隐私安全。",
+    "privacyLink": "隐私政策",
+    "footer": "玄机日历 · 科技玄学个人成长工具",
+    "errorPasswordMismatch": "两次输入的密码不一致",
+    "errorPasswordLength": "密码长度至少6位"
+  },
+  "Setup": {
+    "title": "初始化你的命盘",
+    "loading": "正在计算天机...",
+    "submit": "开启玄机之旅"
+  },
+  "Disclaimer": {
+    "title": "知情告知与免责声明",
+    "point1": "1. 本产品定位为个人成长助手与娱乐工具，所有内容（包含但不限于每日指引、姻缘配对）均由 AI 生成，不代表医学、心理学或专业法律建议。",
+    "point2": "2. 测算结果基于传统民俗逻辑与性格模型，仅供娱乐参考。请勿将其作为重大决策（如投资、婚姻、医疗）的唯一依据。",
+    "point3": "3. 您的个人出生信息将优先加密存储于本地设备。开启云同步即代表您同意我们将加密后的脱敏数据进行存储。",
+    "agreeButton": "我已阅读并知晓"
+  },
+  "Paywall": {
+    "title": "解锁深度因缘羁绊",
+    "feature1": "包含未来三年的感情运势波动曲线、",
+    "feature2": "基于八字合婚的\"宿命避雷针\"、",
+    "feature3": "以及 AI 生成的 3000 字相处秘籍。",
+    "ctaButton": "立即开启 · ¥9.9",
+    "terms": "点击即代表同意《用户增值服务协议》"
+  },
+  "Share": {
+    "saveButton": "保存海报至相册",
+    "scanLabel": "扫码开启你的玄机命盘",
+    "defaultGuidance": "逻辑是你的骨骼，直觉是你的眼睛。今日宜静心深耕，忌盲目扩张。"
+  },
+  "Auth": {
+    "guestUsername": "游客",
+    "errorLoginRequired": "邮箱和密码是必填项",
+    "errorInvalidCredentials": "邮箱或密码不正确",
+    "errorServerError": "服务器内部错误",
+    "errorEmailTaken": "该邮箱已被注册",
+    "errorConfig": "服务器配置错误: JWT密钥缺失",
+    "errorDB": "数据库连接失败"
+  },
+  "AI": {
+    "dailyPrompt": "你是一位融合东西方智慧的成长教练。\n用户性格: {mbti}, 星座: {zodiac}\n今日干支: {ganzhi}, 宜: {yi}, 忌: {ji}\n请生成一段100字以内的今日成长指引。",
+    "oracleSystem": "你是一位精通东方命理（八字、紫微斗数）、西方占星术以及现代心理学（MBTI）的\"科技玄学大师\"。\n用户数据：MBTI={mbti}, 身强身弱={strength}\n输出要求：赛博朋克 + 禅意风格",
+    "matchPrompt": "你是一位跨越时空的姻缘引路人。请根据以下硬核数据，为两位用户撰写一份\"赛博命理\"配对报告。\n\n【用户A】MBTI: {mbtiA}, 日主能量: {strengthA}\n【用户B】MBTI: {mbtiB}, 日主能量: {strengthB}\n【系统测算】匹配度: {score}%, 标签: {tags}\n\n请按以下格式输出：\n1. [磁场共振]：用诗意的语言描述两人的能量交织\n2. [潜在锚点]：基于八字五行指出两人的互补点。\n3. [相处代码]：给出一句两人的专属相处咒语（建议）。",
+    "mockDaily": "今日'癸水'能量充沛，结合你INTJ的深度思考力，适合复盘长线目标。忌远行，建议静心阅读。",
+    "mockOracle": "今日你的 Ni 功能受'癸水'润泽，直觉敏锐。建议：1. 完成拖延已久的架构设计；2. 晚上 20 点后切断数字连接。"
+  },
+  "Match": {
+    "tagSoulmate": "灵魂契合",
+    "tagDestiny": "宿命牵引",
+    "tagComplement": "互补共生",
+    "tagEnduring": "细水长流",
+    "tagChallenge": "磨合期长",
+    "tagCollision": "性格碰撞",
+    "adviceHigh": "能量磁场高度契合，适合共同开启长期目标。",
+    "adviceLow": "建议保持独立空间，以包容化解能量冲突。",
+    "mockReport": "你们的相遇是一场预设的程序触发。A的严谨逻辑（INTJ）为B的跳跃能量提供了结构，而B的感性磁场滋润了A干燥的五行平衡..."
+  },
+  "Constants": {
+    "ELEMENT_NAMES": {
+      "mu": "木",
+      "huo": "火",
+      "tu": "土",
+      "jin": "金",
+      "shui": "水"
+    },
+    "MBTI_TRAITS": {
+      "INTJ": "战略规划",
+      "INTP": "逻辑分析",
+      "ENTJ": "领导决策",
+      "ENTP": "创新思维",
+      "INFJ": "深度洞察",
+      "INFP": "理想主义",
+      "ENFJ": "激励引导",
+      "ENFP": "热情探索",
+      "ISTJ": "严谨执行",
+      "ISFJ": "细致关怀",
+      "ESTJ": "高效管理",
+      "ESFJ": "社交协调",
+      "ISTP": "实践解决",
+      "ISFP": "艺术感知",
+      "ESTP": "冒险行动",
+      "ESFP": "活力表现"
+    },
+    "YI_SUGGESTIONS": {
+      "yi_0": "宜静心祈福，可进行5分钟感恩冥想或书写祈愿。",
+      "yi_1": "财星显露，适合处理待办事项中的\"金钱\"类任务，哪怕只做5分钟。",
+      "yi_2": "宜规划行程，整理环境，为下一阶段做准备。",
+      "yi_3": "适合主动联系朋友或进行重要社交，练习表达。",
+      "yi_4": "宜学习新知识，攻克一直拖延的难题。",
+      "yi_5": "适合启动新项目，哪怕只是迈出最小一步。",
+      "yi_6": "关注身体，今日适合运动或健康饮食计划。"
+    },
+    "JI_SUGGESTIONS": {
+      "ji_0": "今日不宜重大社交决策，保持低调，避免冲突。",
+      "ji_1": "财务事务宜暂缓，避免冲动投资或大额支出。",
+      "ji_2": "出行易遇阻滞，建议推迟非必要行程，或提前规划备选方案。",
+      "ji_3": "不宜启动新项目，宜先完善计划。",
+      "ji_4": "避免争执，今日不宜签署重要法律文件。"
+    },
+    "DEFAULT_SUGGESTION": "今日无特别宜忌，可自由安排。",
+    "PENGZU_TIANGAN": {
+      "甲": "建议今天先做财务盘点，而非冲动消费。",
+      "乙": "建议今天先做小范围试验或优化细节，而非全面铺开。",
+      "丙": "建议今天保持冷静，遇到矛盾先搁置，晚点再沟通。",
+      "丁": "建议今天先保持原样，让想法\"冷却\"一下。",
+      "戊": "建议今天只做咨询或资料收集，不要拍板。",
+      "己": "建议今天先维持现状，避免冲动决裂。",
+      "庚": "建议今天做机械性、重复性工作，或先做框架，细节留到明天。",
+      "辛": "建议今天不要强行推进需要默契的合作，给彼此一点空间。",
+      "壬": "建议今天对财务和情绪都保持谨慎，避免做出重大资金决策。",
+      "癸": "建议今天先整理证据和逻辑，择日再辩。"
+    },
+    "PENGZU_DIZHI": {
+      "子": "深夜不做人生决定，睡一觉再说。",
+      "丑": "重要仪式前先调整好身心状态，选个精神饱满的日子。",
+      "寅": "怀揣感恩之心时，先让自己静下来，再行表达。",
+      "卯": "保持适当边界，让关系自然流淌。",
+      "辰": "有情绪及时疏导，但不要独自反复咀嚼，找朋友聊聊或运动释放。",
+      "巳": "出行前再检查一遍行李和计划，磨刀不误砍柴工。",
+      "午": "想改变现状，先等火气降下来，用理性而非情绪推动。",
+      "未": "身体不适先问专业医生，不要自行\"对症下药\"。",
+      "申": "搬家或换床前先\"暖房\"，用轻松的活动让新空间充满舒适感。",
+      "酉": "如果今天心情不好，就推掉饭局，独自安静消化，改天再聚。",
+      "戌": "晚餐清淡，给身体减负，睡眠质量更高。",
+      "亥": "结婚前确保彼此足够坦诚，别让\"将就\"成为日后的隐患。"
+    },
+    "WEAKNESS_NAMES": {
+      "procrastination": "拖延症",
+      "anxiety": "焦虑内耗",
+      "perfectionism": "完美主义",
+      "socialAvoidance": "社交回避",
+      "moodSwings": "情绪波动",
+      "indecision": "优柔寡断"
+    },
+    "WEAKNESS_BAZI_CAUSES": {
+      "procrastination": "食伤过重而无财转化，空想多于行动",
+      "anxiety": "枭神夺食或官杀克身，自我施压过大",
+      "perfectionism": "印旺身强，过于追求规划完美",
+      "socialAvoidance": "比劫弱，或官杀克身而无食伤流通",
+      "moodSwings": "日主弱而官杀混杂，或食伤无制",
+      "indecision": "财星不透，或印旺身弱"
+    },
+    "WEAKNESS_MBTI_CAUSES": {
+      "procrastination": "典型P型人格（感知型）特征，追求可能性而忽视结项",
+      "anxiety": "非健康状态下的Ni-Ti循环（内倾直觉-内倾逻辑）",
+      "perfectionism": "J型（判断型）加上理想主义，苛求细节",
+      "socialAvoidance": "内倾(I)过强，不擅处理人际能量交换",
+      "moodSwings": "F型（情感型）过度敏感，情绪易受外界牵引",
+      "indecision": "P型（感知型）且决策功能发展不足"
+    },
+    "WEAKNESS_PRACTICES": {
+      "procrastination_0": "番茄工作法25分钟",
+      "procrastination_1": "列出今日最讨厌的3件事并先做一件",
+      "anxiety_0": "5分钟正念呼吸",
+      "anxiety_1": "书写不安清单并物理销毁",
+      "perfectionism_0": "设定\"不完美\"初稿",
+      "perfectionism_1": "刻意留一个不完美细节",
+      "socialAvoidance_0": "主动与一位熟人打招呼",
+      "socialAvoidance_1": "参加一场小范围社交并记录感受",
+      "moodSwings_0": "情绪日记记录触发点",
+      "moodSwings_1": "5分钟正念觉察情绪",
+      "indecision_0": "设定10分钟决策时限",
+      "indecision_1": "先选一个方向试行"
+    },
+    "WEAKNESS_HEXAGRAM_NAMES": {
+      "procrastination": "山水蒙",
+      "anxiety": "地火明夷",
+      "perfectionism": "乾为天",
+      "socialAvoidance": "山泽损",
+      "moodSwings": "风雷益",
+      "indecision": "水雷屯"
+    },
+    "WEAKNESS_HEXAGRAM_INTERPRETATIONS": {
+      "procrastination": "蒙卦象征启蒙阶段的混沌与蒙昧，需以果敢行动破开迷雾。拖延正是困于蒙昧，唯有主动切入方能拨云见日。",
+      "anxiety": "明夷卦为光明受创，君子以莅众，用晦而明。焦虑时心如暗夜，当以静制动，收敛心神，待光复明。",
+      "perfectionism": "乾卦九五\"飞龙在天\"，然初九\"潜龙勿用\"告诫须待时机。完美主义常求一步登天，却忽略循序渐进之德。",
+      "socialAvoidance": "损卦损下益上，其道上行。社交回避是因自我封闭，需主动\"损\"去防备心，方得人际滋养。",
+      "moodSwings": "益卦风雷相激，君子以见善则迁，有过则改。情绪如风雷，当借其势向上，而非为其所覆。",
+      "indecision": "屯卦始生之难，君子以经纶。初生之艰需果断开创，犹豫只会困于屯难。"
+    },
+    "STRENGTH_STATUS": {
+      "偏旺": "偏旺",
+      "极旺": "极旺",
+      "偏弱": "偏弱",
+      "极弱": "极弱",
+      "中和": "中和"
+    }
+  }
+}
