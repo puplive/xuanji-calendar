@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 import ClientLayout from './ClientLayout';
 import zhMessages from '@/messages/zh.json';
 import enMessages from '@/messages/en.json';
@@ -21,6 +22,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const messages = messagesMap[locale] || zhMessages;
 
   return (

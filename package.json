@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "build:cf": "npx @cloudflare/next-on-pages@1 && node scripts/split-worker.mjs"
+        "build:cf": "node scripts/deploy.mjs"
   },
   "dependencies": {
     "crypto-js": "^4.2.0",
