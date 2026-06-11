@@ -4,7 +4,6 @@ export const runtime = 'edge';
 import { useProfile } from '@/hooks/useProfile';
 import { Calendar, Brain, Cpu, ChevronRight } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
-import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -163,8 +162,7 @@ export default function ProfilePage() {
                     {type}
 
                     {isSelected && (
-                    <motion.div
-                        layoutId="active-mbti-glow"
+                    <div
                         className="absolute -bottom-1 left-1/4 right-1/4 h-[1px] bg-white/60 blur-[1px]"
                     />
                     )}

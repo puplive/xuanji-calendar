@@ -7,7 +7,6 @@
 export const runtime = 'edge';
 
 import dynamic from 'next/dynamic';
-import { motion } from 'framer-motion';
 import { Sparkles, Plus, Trophy, Calendar, TrendingUp, Target } from 'lucide-react';
 import { GoalCard } from '@/components/goals/GoalCard';
 import { useGoals } from '@/hooks/useGoals';
@@ -80,20 +79,17 @@ export default function GoalsPage() {
           <h1 className="text-3xl font-black italic text-gold-500">{t('pageTitle')}</h1>
           <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">{t('pageSubtitle')}</p>
         </div>
-        <motion.button
-          whileTap={{ scale: 0.9 }}
+        <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="p-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-gold-500"
+          className="p-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-gold-500 active:scale-95 transition-transform"
         >
           <Plus size={20} />
-        </motion.button>
+        </button>
       </header>
 
       {/* 添加目标表单 */}
       {showAddForm && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="mb-8 p-6 bg-zinc-900/80 border border-white/10 rounded-3xl backdrop-blur-3xl"
         >
           <h3 className="text-sm font-bold text-gold-500 mb-4">{t('addGoalTitle')}</h3>
@@ -165,7 +161,7 @@ export default function GoalsPage() {
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* 统计概览 */}

@@ -7,7 +7,6 @@
 export const runtime = 'edge';
 
 import dynamic from 'next/dynamic';
-import { motion } from 'framer-motion';
 import { ShieldAlert, Zap, Lock, TrendingUp, Target, Plus } from 'lucide-react';
 import { useWeakness } from '@/hooks/useWeakness';
 import { useState } from 'react';
@@ -73,21 +72,18 @@ export default function GrowPage() {
             <h1 className="text-3xl font-black italic text-red-500 uppercase">Weakness</h1>
             <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">{t('pageSubtitle')}</p>
           </div>
-          <motion.button
-            whileTap={{ scale: 0.9 }}
+          <button
             onClick={() => setShowAddForm(!showAddForm)}
             className="p-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-red-500"
           >
             <Plus size={20} />
-          </motion.button>
+          </button>
         </div>
       </header>
 
       {/* 添加弱点表单 */}
       {showAddForm && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="mb-8 p-6 bg-zinc-900/80 border border-white/10 rounded-3xl backdrop-blur-3xl"
         >
           <h3 className="text-sm font-bold text-red-500 mb-4">{t('addTitle')}</h3>
@@ -133,7 +129,7 @@ export default function GrowPage() {
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* 统计概览 */}
@@ -156,9 +152,8 @@ export default function GrowPage() {
 
       {/* 今日修行卡片 */}
       <section className="mb-8">
-        <motion.div
-          whileHover={{ y: -5 }}
-          className="p-6 rounded-[2.5rem] bg-linear-to-br from-red-500/20 to-zinc-900 border border-red-500/30 backdrop-blur-3xl"
+        <div
+          className="p-6 rounded-[2.5rem] bg-linear-to-br from-red-500/20 to-zinc-900 border border-red-500/30 backdrop-blur-3xl hover:-translate-y-1 transition-transform duration-200"
         >
           <div className="flex items-center gap-2 mb-4 text-red-400">
             <ShieldAlert size={16} />
@@ -180,7 +175,7 @@ export default function GrowPage() {
             <Zap size={18} fill="currentColor" />
             {t('completeButton')}
           </button>
-        </motion.div>
+        </div>
       </section>
 
       {/* 统计图表 */}
@@ -200,16 +195,15 @@ export default function GrowPage() {
         </div>
         <div className="grid grid-cols-2 gap-3">
           {weaknessTypes.map((weakness) => (
-            <motion.button
+            <button
               key={weakness.id}
-              whileTap={{ scale: 0.95 }}
               onClick={() => handleAddWeakness(weakness.id, weakness.name)}
-              className="p-4 bg-zinc-900/50 border border-white/5 rounded-2xl text-left transition-all hover:border-red-500/30"
+              className="p-4 bg-zinc-900/50 border border-white/5 rounded-2xl text-left transition-all hover:border-red-500/30 active:scale-95"
               style={{ borderLeftColor: weakness.color, borderLeftWidth: '4px' }}
             >
               <h4 className="text-sm font-medium text-white mb-1">{weakness.name}</h4>
               <p className="text-[10px] text-zinc-500 leading-snug">{weakness.description}</p>
-            </motion.button>
+            </button>
           ))}
         </div>
       </section>

@@ -19,9 +19,6 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [],
   },
-
-  // 优化打包体积 - 针对 Next.js 16 的配置
-  serverExternalPackages: ['lunar-javascript'],
 };
 
 export default withNextIntl(nextConfig);

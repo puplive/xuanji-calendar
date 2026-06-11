@@ -4,7 +4,6 @@ export const runtime = 'edge';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Sparkles, User, Calendar } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
@@ -58,10 +57,7 @@ export default function LoginPage() {
           <p className="text-sm text-zinc-400">{t('pageSubtitle')}</p>
         </header>
 
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <form
           onSubmit={handleSubmit}
           className="space-y-6"
         >
@@ -124,7 +120,7 @@ export default function LoginPage() {
               </Link>
             </p>
           </div>
-        </motion.form>
+        </form>
 
         <div className="flex items-center my-8">
           <div className="flex-1 h-px bg-white/10"></div>
@@ -132,10 +128,7 @@ export default function LoginPage() {
           <div className="flex-1 h-px bg-white/10"></div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <div
           className="text-center"
         >
           <h3 className="text-sm font-medium text-zinc-300 mb-4">{t('guestTitle')}</h3>
@@ -149,7 +142,7 @@ export default function LoginPage() {
           <p className="text-xs text-zinc-500 mt-4 px-4">
             {t('guestNote')}
           </p>
-        </motion.div>
+        </div>
 
         <div className="mt-12 pt-8 border-t border-white/5">
           <div className="flex items-center justify-center gap-2 text-[10px] text-zinc-500">

@@ -4,7 +4,6 @@ export const runtime = 'edge';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, User, Sparkles, Calendar } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { MBTI_TRAITS } from '@/constants/mappings';
@@ -86,10 +85,7 @@ export default function RegisterPage() {
           <p className="text-sm text-zinc-400">{t('pageSubtitle')}</p>
         </header>
 
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <form
           onSubmit={handleSubmit}
           className="space-y-6"
         >
@@ -218,7 +214,7 @@ export default function RegisterPage() {
               </Link>
             </p>
           </div>
-        </motion.form>
+        </form>
 
         <div className="mt-12 pt-8 border-t border-white/5">
           <p className="text-xs text-zinc-500 text-center">

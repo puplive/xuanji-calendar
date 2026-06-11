@@ -1,14 +1,11 @@
 "use client";
 export const runtime = 'edge';
 
-import dynamic from 'next/dynamic';
 import { useProfile } from '@/hooks/useProfile';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ShieldAlert, Sparkles, Compass, Loader2, Calendar, Lightbulb } from 'lucide-react';
 import { useMemo, useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-
-const FortuneCanvas = dynamic(() => import('@/components/visuals/FortuneCanvas').then(m => m.FortuneCanvas), { ssr: false });
 
 import { Element, ELEMENT_NAMES, MBTI_TRAITS, ZODIAC_ELEMENTS, ZODIAC_WUXING_KEYS, ELEMENT_NAME_KEYS, MBTI_TRAIT_KEYS } from '@/constants/mappings';
 // 定义计算模块的类型
@@ -256,8 +253,6 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#050505] text-white relative overflow-hidden font-sans">
-      {/* 4. 背景：动态能量粒子层 (实时响应 visualConfig) */}
-      <FortuneCanvas config={visualConfig} />
 
       <div className="relative z-10 max-w-lg mx-auto px-6 pt-12 pb-32">
         {/* 顶部：天时信息 */}

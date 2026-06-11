@@ -100,7 +100,6 @@
 // src/components/goals/GoalCard.tsx
 "use client";
 
-import { motion } from 'framer-motion';
 import { CheckCircle2, Trophy, Target } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -119,9 +118,8 @@ interface GoalCardProps {
 export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
   const t = useTranslations('GoalCard');
   return (
-    <motion.div 
-      whileHover={{ y: -2 }}
-      className="relative group bg-zinc-900/40 border border-white/5 backdrop-blur-xl p-5 rounded-3xl overflow-hidden mb-4"
+    <div
+      className="relative group bg-zinc-900/40 border border-white/5 backdrop-blur-xl p-5 rounded-3xl overflow-hidden mb-4 hover:-translate-y-0.5 transition-transform duration-200"
     >
       <div className="flex justify-between items-start relative z-10">
         <div className="flex gap-4">
@@ -136,11 +134,10 @@ export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
           </div>
         </div>
 
-        <motion.button 
-          whileTap={{ scale: 0.9 }}
+        <button
           onClick={() => goal.id && onComplete?.(goal.id)}
-          className={`h-10 w-10 rounded-full flex items-center justify-center transition-all ${
-            goal.progress >= 100 
+          className={`h-10 w-10 rounded-full flex items-center justify-center transition-all active:scale-90 ${
+            goal.progress >= 100
             ? 'bg-green-500/20 text-green-400'
             : goal.progress > 0
             ? 'bg-gold-500 text-amber-500'
@@ -148,7 +145,7 @@ export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
           }`}
         >
           {goal.progress >= 100 ? <Trophy size={18} /> : <CheckCircle2 size={20} />}
-        </motion.button>
+        </button>
       </div>
 
       {/* 渲染传入的建议文本 */}
@@ -162,13 +159,12 @@ export const GoalCard = ({ goal, onComplete, advice }: GoalCardProps) => {
 
       {/* 进度条逻辑 */}
       <div className="w-full bg-zinc-800/50 h-[2px] mt-6 rounded-full overflow-hidden">
-        <motion.div 
-          initial={{ width: 0 }}
-          animate={{ width: `${goal.progress}%` }}
-          className="h-full bg-green-500"
+        <div
+          className="h-full bg-green-500 transition-all duration-1000"
+          style={{ width: `${goal.progress}%` }}
         />
       </div>
-    </motion.div>
+    </div>
   );
 };
 

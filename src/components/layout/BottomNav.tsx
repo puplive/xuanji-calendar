@@ -6,7 +6,6 @@
 
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { NAV_ITEMS } from '@/constants/navigation';
 
@@ -35,30 +34,22 @@ export const BottomNav = () => {
             >
               {/* 激活状态的背景光晕 */}
               {isActive && (
-                <motion.div
-                  layoutId="nav-active-bg"
-                  className="absolute inset-0 bg-gold-500/10 rounded-full blur-md"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
+                <div className="absolute inset-0 bg-gold-500/10 rounded-full blur-md" />
               )}
 
               {/* 图标 */}
-              <motion.div
-                animate={{ 
-                  scale: isActive ? 1.2 : 1,
-                  color: isActive ? '#D4AF37' : '#71717a' 
+              <div
+                className="relative z-10 transition-all duration-300"
+                style={{
+                  transform: isActive ? 'scale(1.2)' : 'scale(1)',
                 }}
-                className="relative z-10"
               >
-                <Icon size={isActive ? 24 : 22} strokeWidth={isActive ? 2.5 : 2} />
-              </motion.div>
+                <Icon size={isActive ? 24 : 22} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-[#D4AF37]' : 'text-zinc-500'} />
+              </div>
 
               {/* 底部的小点（激活时显示） */}
               {isActive && (
-                <motion.div
-                  layoutId="nav-dot"
-                  className="absolute -bottom-1 w-1 h-1 bg-gold-500 rounded-full"
-                />
+                <div className="absolute -bottom-1 w-1 h-1 bg-gold-500 rounded-full" />
               )}
 
               {/* 悬停时的提示 */}
