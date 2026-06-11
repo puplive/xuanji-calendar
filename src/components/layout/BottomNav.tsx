@@ -16,7 +16,13 @@ export const BottomNav = () => {
 
   // Strip locale prefix for path matching
   const pathSegments = pathname.split('/').filter(Boolean);
+  const locale = pathSegments[0] || 'zh';
   const pathWithoutLocale = pathSegments.length > 1 ? '/' + pathSegments.slice(1).join('/') : '/';
+
+  // Navigate with locale prefix
+  const navigateWithLocale = (path: string) => {
+    router.push('/' + locale + path);
+  };
 
   return (
     <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
@@ -29,7 +35,7 @@ export const BottomNav = () => {
           return (
             <button
               key={item.id}
-              onClick={() => router.push(item.path)}
+              onClick={() => navigateWithLocale(item.path)}
               className="relative flex flex-col items-center justify-center w-12 h-12 transition-colors group"
             >
               {/* 激活状态的背景光晕 */}
