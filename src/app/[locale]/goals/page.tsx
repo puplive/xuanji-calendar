@@ -6,13 +6,15 @@
 "use client";
 export const runtime = 'edge';
 
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { Sparkles, Plus, Trophy, Calendar, TrendingUp, Target } from 'lucide-react';
 import { GoalCard } from '@/components/goals/GoalCard';
-import { GoalChart } from '@/components/goals/GoalChart';
 import { useGoals } from '@/hooks/useGoals';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+
+const GoalChart = dynamic(() => import('@/components/goals/GoalChart'), { ssr: false });
 
 export default function GoalsPage() {
   const t = useTranslations('Goals');

@@ -1,13 +1,14 @@
 "use client";
 export const runtime = 'edge';
 
+import dynamic from 'next/dynamic';
 import { useProfile } from '@/hooks/useProfile';
-import { FortuneCanvas } from '@/components/visuals/FortuneCanvas';
-import { GoalCard } from '@/components/goals/GoalCard';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ShieldAlert, Sparkles, Compass, Loader2, Calendar, Lightbulb } from 'lucide-react';
 import { useMemo, useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+
+const FortuneCanvas = dynamic(() => import('@/components/visuals/FortuneCanvas'), { ssr: false });
 
 import { Element, ELEMENT_NAMES, MBTI_TRAITS, ZODIAC_ELEMENTS, ZODIAC_WUXING_KEYS, ELEMENT_NAME_KEYS, MBTI_TRAIT_KEYS } from '@/constants/mappings';
 // 定义计算模块的类型

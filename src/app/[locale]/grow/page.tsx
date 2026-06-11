@@ -6,12 +6,14 @@
 "use client";
 export const runtime = 'edge';
 
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { ShieldAlert, Zap, Lock, TrendingUp, Target, Plus } from 'lucide-react';
-import { WeaknessChart } from '@/components/weakness/WeaknessChart';
 import { useWeakness } from '@/hooks/useWeakness';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+
+const WeaknessChart = dynamic(() => import('@/components/weakness/WeaknessChart'), { ssr: false });
 
 export default function GrowPage() {
   const t = useTranslations('Grow');
