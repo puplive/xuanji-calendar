@@ -22,7 +22,15 @@
       "Bash(curl -s -o /dev/null -w \" /zh/grow \" http://localhost:3000/zh/grow)",
       "Bash(npx next *)",
       "Bash(python3 -c ' *)",
-      "Bash(kill 8691)"
+      "Bash(kill 8691)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(gh auth *)",
+      "Bash(npx @cloudflare/next-on-pages@1)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(curl -sI \"https://xuanji-calendar.pages.dev\")",
+      "Bash(curl -sI \"https://xuanji-calendar.pages.dev/zh\")"
     ]
   }
 }
