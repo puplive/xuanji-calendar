@@ -4,7 +4,6 @@
  */
 
 "use client";
-export const runtime = 'edge';
 
 import dynamic from 'next/dynamic';
 import { ShieldAlert, Zap, Lock, TrendingUp, Target, Plus } from 'lucide-react';

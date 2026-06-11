@@ -4,7 +4,6 @@
  */
 
 "use client";
-export const runtime = 'edge';
 
 import dynamic from 'next/dynamic';
 import { Sparkles, Plus, Trophy, Calendar, TrendingUp, Target } from 'lucide-react';

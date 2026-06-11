@@ -1,5 +1,4 @@
 "use client";
-export const runtime = 'edge';
 
 import { useProfile } from '@/hooks/useProfile';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
