@@ -1,4 +1,5 @@
 "use client";
+export const runtime = 'edge';
 
 import { useProfile } from '@/hooks/useProfile';
 import { Calendar, Brain, Cpu, ChevronRight } from 'lucide-react';
