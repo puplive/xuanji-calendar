@@ -14,12 +14,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **技术栈**：
 - Next.js 16 (App Router) + React 19 + TypeScript
-- Tailwind CSS 4 + Framer Motion
+- Tailwind CSS 4（无 Framer Motion，使用 CSS transition 替代）
 - lunar-javascript (农历/八字计算)
 - Dexie (IndexedDB) + crypto-js (本地加密)
-- 边缘运行时 (Edge Runtime)
-- 上传github 自动在 cloudflare pages 部署 <3M
-- 数据库线上使用cloudflare D1
+- **静态导出 (`output: 'export'`)** + Cloudflare Pages Functions（APIs）
+- Cloudflare D1（数据库）
+- 上传 GitHub 自动在 Cloudflare Pages 部署，总大小 < 3MB
 
 ## 开发命令
 
@@ -27,52 +27,117 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # 开发服务器 (http://localhost:3000)
 pnpm dev
 
-# 生产构建
+# 生产构建（等同于 Cloudflare 的构建命令）
 pnpm build
 
-# 启动生产服务器
-pnpm start
+# Cloudflare Pages 构建（隐藏 API routes → next build → 复制 functions）
+pnpm build:cf
 
 # 代码检查
 pnpm lint
 
-# Cloudflare Pages 构建
-pnpm build:cf
+# 启动生产服务器
+pnpm start
 ```
 
 ## 架构概览
+
+### 部署架构
+
+```
+静态页面 ← output: 'export' (out/)
+  ├── /en/*.html, /zh/*.html   → Cloudflare Pages 静态托管
+  ├── /_next/static/*           → 客户端 JS/CSS 资源
+  └── functions/                → Cloudflare Pages Functions (API)
+        ├── _middleware.js       → 根路径重定向 / → /en
+        └── api/auth/*          → 认证 API
+        └── api/oracle.js       → AI 神谕接口
+        └── api/sync/*          → 数据同步 API
+        └── api/checkout.js     → 支付 stub
+```
+
+**构建流程**（`scripts/deploy.mjs`）：
+1. 临时隐藏 `src/app/api/` 和 `src/middleware.ts`（不兼容 static export）
+2. 执行 `next build` 生成静态页面到 `out/`
+3. 复制 `functions/` → `out/functions/`
+4. 创建 `out/_redirects`（根路径重定向到 /en）
+5. 恢复被隐藏的文件
+
+**Cloudflare Pages 设置要求**：
+- Build command: `pnpm build:cf`
+- Build output directory: `out`
+- D1 binding: `DB`
+- 环境变量: `JWT_SECRET`
 
 ### 应用结构
 
 ```
 src/
-├── app/                    # Next.js App Router
-│   ├── page.tsx           # 首页（粒子八卦图 + 能量状态）
-│   ├── goals/page.tsx     # 目标管理
-│   ├── grow/page.tsx      # 弱点克服
-│   ├── profile/page.tsx   # 个人档案
-│   ├── setup/page.tsx     # 初始设置
-│   ├── layout.tsx         # 根布局（含 SecurityHandler + BottomNav）
-│   ├── actions/           # Server Actions (AI 生成)
-│   └── api/               # API 路由 (边缘运行时)
+├── app/                    # Next.js App Router（静态生成）
+│   ├── [locale]/          # 多语言路由（en, zh）
+│   │   ├── page.tsx       # 首页（粒子八卦图 + 能量状态）
+│   │   ├── goals/page.tsx # 目标管理
+│   │   ├── grow/page.tsx  # 弱点克服
+│   │   ├── profile/       # 个人档案
+│   │   ├── setup/         # 初始设置
+│   │   ├── login/         # 登录
+│   │   ├── register/      # 注册
+│   │   ├── layout.tsx     # 多语言布局（setRequestLocale）
+│   │   └── ClientLayout.tsx # 客户端布局（AuthProvider, BottomNav, SecurityHandler）
+│   ├── layout.tsx         # 根布局
+│   ├── global-error.tsx   # 全局错误边界
+│   └── globals.css        # Tailwind CSS
 ├── components/            # React 组件
 │   ├── visuals/           # Canvas 可视化组件
 │   ├── goals/             # 目标相关组件
 │   ├── weakness/          # 弱点克服组件
-│   ├── layout/            # 布局组件
+│   ├── layout/            # 布局组件（BottomNav, LanguageSwitcher）
 │   ├── share/             # 分享功能组件
 │   ├── premium/           # 付费墙组件
 │   └── legal/             # 法律声明组件
 ├── hooks/                 # 自定义 Hooks
-├── lib/                   # 核心业务逻辑库
-└── constants/             # 常量定义
+│   ├── useProfile.ts      # 用户档案（birthDate + MBTI）
+│   ├── useGoals.ts        # 目标管理（IndexedDB + 云同步）
+│   ├── useWeakness.ts     # 弱点实践（IndexedDB + 云同步）
+│   └── useDailyGuidance.ts # 每日指引缓存
+├── lib/                   # 核心业务逻辑
+│   ├── bazi-engine.ts     # 八字能量计算引擎
+│   ├── strength-engine.ts # 命局强度分析
+│   ├── profile-utils.ts   # 用户档案计算
+│   ├── visual-mapper.ts   # 视觉参数映射
+│   ├── fortune.ts         # 命理 + 黄历综合
+│   ├── db.ts              # Dexie IndexedDB 定义
+│   ├── sync.ts            # 数据同步服务
+│   ├── d1.ts              # D1 客户端（仅供 server-side 使用）
+│   └── crypto.ts          # 加密工具
+├── constants/             # 常量定义
+│   ├── mappings.ts        # 元素/MBTI/星座映射
+│   └── navigation.ts      # 导航项配置
+├── contexts/              # React Context
+│   └── AuthContext.tsx     # 认证上下文（localStorage + API）
+└── messages/              # next-intl 翻译
+    ├── zh.json
+    └── en.json
 ```
+
+functions/                    # Cloudflare Pages Functions
+├── _middleware.js             # 根路径重定向
+└── api/
+    ├── auth/
+    │   ├── login.js           # POST 登录
+    │   ├── register.js        # POST 注册
+    │   └── me.js              # GET 用户信息
+    ├── oracle.js              # POST AI 神谕
+    ├── sync/
+    │   ├── push.js            # POST 推送本地更改
+    │   └── pull.js            # POST 拉取云端数据
+    └── checkout.js            # POST 支付 stub
 
 ### 核心数据流
 
 1. **用户档案存储** → `hooks/useProfile.ts`
-   - 使用 `localStorage` 存储 `{ birthDate, mbti }`
-   - 提供 `profile` 状态和 `updateProfile` 方法
+   - 游客模式使用 `localStorage`
+   - 登录用户通过 AuthContext 同步到云端
 
 2. **命理计算** → `lib/` 目录
    - `bazi-engine.ts`: 八字五行能量计算（基于 lunar-javascript）
@@ -80,21 +145,45 @@ src/
    - `profile-utils.ts`: 用户档案计算（八字、干支、星座）
    - `visual-mapper.ts`: 将命理数据映射到 Canvas 视觉参数
 
-3. **首页渲染** → `app/page.tsx`
+3. **首页渲染** → `app/[locale]/page.tsx`
    - 使用 `useProfile` 获取用户数据
-   - 通过 `useMemo` 计算 `fortuneData`（包含五行分数、强度、视觉配置）
-   - 渲染 `FortuneCanvas`（动态粒子）和能量状态卡片
+   - 动态加载 `lunar-javascript` 等重型计算模块
+   - 使用 `useMemo` 缓存 `fortuneData`（包含五行分数、强度、视觉配置）
+   - 静态导出，纯客户端渲染
 
-4. **AI 生成** → `app/api/` 和 `app/actions/`
-   - API 路由使用边缘运行时 (`runtime: 'edge'`)
-   - `generateGuidance.ts`: Server Action 生成每日指引
-   - `oracle/route.ts`: AI 提示词工程，数据匿名化处理
+4. **API 请求** → `functions/api/` Pages Functions
+   - 认证 API 对接 Cloudflare D1
+   - 同步 API 处理 IndexedDB ↔ D1 数据同步
 
 ### 本地存储策略
 
 - **默认本地存储**：用户个人信息（出生时间、MBTI）仅存储在本地（localStorage/IndexedDB）
 - **云同步可选**：用户可主动开启加密云同步（AES-256）
 - **配对码机制**：姻缘配对时仅交换必要信息（星座、MBTI、简略五行），不暴露完整八字
+
+## Key Rules
+
+### 导航栏必须带 locale 前缀
+BottomNav 跳转时必须包含当前 locale，如 `/en/goals` 而不是 `/goals`：
+```tsx
+const locale = pathSegments[0] || 'zh';
+router.push('/' + locale + item.path);
+```
+
+### next-intl 静态导出要求
+1. 服务端 layout 必须调用 `setRequestLocale(locale)`（位于 `[locale]/layout.tsx`）
+2. 使用 `generateStaticParams()` 返回所有 locale
+3. `NextIntlClientProvider` 需要传入 `messages`、`locale`、`timeZone`
+4. 根布局 `html lang` 使用 `suppressHydrationWarning`
+
+### API 路由在 Pages Functions 中
+- API 逻辑写在 `functions/api/` 下，不是 `src/app/api/`
+- Pages Functions 使用 ESM 语法，`export async function onRequest(context)`
+- 通过 `context.env.DB` 访问 D1 数据库
+- JWT 签名使用 Web Crypto API（`crypto.subtle.digest`），不使用 npm 包
+
+### 不使用 Framer Motion
+所有动画使用 CSS transition / Tailwind `active:` / `hover:` 替代。
 
 ## 关键文件说明
 
@@ -110,40 +199,16 @@ src/
 - `src/lib/visual-mapper.ts` - **视觉映射器**
   - 将五行分数转换为 Canvas 粒子参数（颜色、密度、速度）
 
-### 可视化组件
+### API (Pages Functions)
 
-- `src/components/visuals/FortuneCanvas.tsx` - **动态粒子八卦图**
-  - 基于 `visualConfig` 实时渲染粒子效果
-  - 五行分数影响粒子颜色（木:翠绿、火:赤红、土:琥珀、金:钛白、水:深蓝）
+- `functions/api/auth/login.js` - POST 登录（SHA-256 + D1 查询）
+- `functions/api/auth/register.js` - POST 注册（SHA-256 + D1 插入）
+- `functions/api/auth/me.js` - GET 获取当前用户
+- `functions/api/oracle.js` - POST AI 神谕（三种类型：daily/goal/practice）
+- `functions/api/sync/push.js` - POST 推送本地变更到 D1
+- `functions/api/sync/pull.js` - POST 从 D1 拉取变更
 
-- `src/components/visuals/BaguaParticles.tsx` - **八卦粒子系统**
-  - 备用粒子实现
-
-### 状态管理
-
-- `src/hooks/useProfile.ts` - **用户档案 Hook**
-  - 管理出生日期和 MBTI 的持久化状态
-
-- `src/hooks/useDailyGuidance.ts` - **每日指引 Hook**
-  - 获取和缓存 AI 生成的每日指引
-
-### 安全与隐私
-
-- `src/components/SecurityHandler.tsx` - **安全处理器**
-  - 注入全局安全策略和隐私保护
-
-- `src/lib/crypto.ts` - **加密工具**
-  - 本地数据加密/解密
-
-### API 路由
-
-- `src/app/api/oracle/route.ts` - **AI 神谕接口**（支持三种类型）
-  - `type: 'daily'` - 接收匿名化命理数据，生成每日个性化解读
-  - `type: 'goal'` - 为目标管理提供 AI 建议
-  - `type: 'practice'` - 为弱点克服练习提供指导
-  - 严格遵守隐私脱敏（不传输原始出生日期）
-
-## 样式与设计规范
+### 样式与设计规范
 
 ### 色彩体系
 
@@ -166,12 +231,6 @@ src/
 - **圆角**：大圆角设计 (`rounded-[2rem]`)
 - **玻璃态效果**：`backdrop-blur-3xl` + `bg-white/10`
 
-### 动画与交互
-
-- **粒子动画**：基于五行分数的实时响应
-- **卡片动效**：使用 Framer Motion 提供微交互
-- **过渡效果**：`transition-all duration-1000` 用于平滑状态变化
-
 ## 开发注意事项
 
 ### 性能优化
@@ -181,13 +240,13 @@ src/
    - 加入帧率检测，低性能设备自动减少粒子密度
    - 使用 `useMemo` 缓存计算密集型结果
 
-2. **边缘运行时**：
-   - API 路由默认 `export const runtime = 'edge'`
-   - Server Actions 也支持边缘运行时
+2. **动态导入重型模块**：
+   - `lunar-javascript` 等大包使用动态 `import()` 延迟加载
+   - 图表组件（recharts）使用 `dynamic(() => import(...), { ssr: false })`
 
-3. **本地存储策略**：
-   - MVP 阶段使用 `localStorage`
-   - 进阶可迁移到 `IndexedDB` (Dexie) 处理大量历史数据
+3. **构建体积控制**（Cloudflare Pages 3MB 限制）：
+   - API 逻辑在 `functions/` 中，不占用静态导出体积
+   - 避免大型 npm 包（已移除 framer-motion）
 
 ### 隐私与合规
 
@@ -223,14 +282,3 @@ src/
 2. **模块化设计**：
    - 引擎逻辑与 UI 组件分离
    - Hook 封装业务状态，组件专注渲染
-
-## 扩展开发指南
-
-当添加新功能时，参考以下现有模式：
-
-- **新计算引擎**：参照 `bazi-engine.ts` 设计类，输出标准化数据结构
-- **新可视化组件**：继承 `FortuneCanvas` 的配置驱动模式
-- **新 AI 功能**：在 `app/api/` 创建边缘路由，遵循匿名化原则
-- **新用户数据**：通过 `useProfile` 扩展或创建专用 Hook
-
-项目详细需求见 `prd.md`，包含完整的产品愿景、功能模块和商业化设计。
